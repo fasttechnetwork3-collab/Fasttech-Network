@@ -1,4 +1,7 @@
 const KEY='fasttechPremiumData';
+// --- পাসওয়ার্ড প্রটেকশন সিস্টেম ---
+const ADMIN_PASS = '12345'; // এখানে আপনার পছন্দমতো পাসওয়ার্ড সেট করুন (যেমন: 12345)
+
 // পেজ লোড হলে চেক করবে লগইন করা আছে কি না
 document.addEventListener('DOMContentLoaded', () => {
     checkAdminAuth();
