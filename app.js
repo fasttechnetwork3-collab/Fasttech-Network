@@ -12,14 +12,16 @@ function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt
 
 function render(){
     const d=getData();
-    
-    // হেডার ও টেক্সট আপডেট
     document.getElementById('heroText').textContent=d.heroText;
     
-    // লোগো ডাইনামিক আপডেট (যদি অ্যাডমিন প্যানেল থেকে আপলোড করা হয়)
-    document.querySelectorAll('.brand img').forEach(img=>{
-        if(d.logo) img.src=d.logo;
-    });
+    const brandLogoEl = document.getElementById('brandLogo');
+    if(brandLogoEl && d.logo){
+        brandLogoEl.src = d.logo;
+    } else {
+        document.querySelectorAll('.brand img').forEach(img=>{
+            if(d.logo) img.src=d.logo;
+        });
+    }
 
     if(d.heroImage){
         const hero=document.querySelector('.hero');
@@ -35,7 +37,6 @@ function render(){
     document.getElementById('contactAddress').textContent=d.address;
     document.getElementById('contactHours').textContent=d.hours;
 
-    // কভারেজ লোকেশন রেন্ডার করা (মডার্ন ব্যাজ স্টাইল)
     const coverageEl=document.getElementById('coverageLocations');
     if(coverageEl){
         const locations=d.coverageLocations||[];
@@ -44,10 +45,8 @@ function render(){
             '<p class="coverage-empty">বর্তমানে কভারেজ এলাকার তালিকা আপডেট করা হচ্ছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>';
     }
 
-    // প্যাকেজ রেন্ডার করা
     document.getElementById('packageGrid').innerHTML=d.packages.map((p,i)=>`<article class="package-card"><div class="package-body"><div class="package-price-circle"><strong>${esc(p.price)}</strong><small>/month</small></div><h3>${esc(p.title)}</h3><div class="package-speed-strip"><span class="speed-icon">⚡</span><strong>${esc(String(p.speed).replace(/\s*Mbps/i,''))}</strong><small>Mbps</small></div><p>${esc(p.desc||'আপনার প্রয়োজন অনুযায়ী ইন্টারনেট প্যাকেজ।')}</p><ul class="package-benefits"><li>✓ YouTube</li><li>✓ Facebook</li><li>✓ BDIX</li></ul><a class="btn package-cta" href="#contact">Subscribe Now <b>→</b></a></div></article>`).join('');
 
-    // গ্যালারি রেন্ডার করা
     const samples=['Network installation','Fiber optic connectivity','FastTech team'];
     document.getElementById('galleryGrid').innerHTML=(d.gallery.length?d.gallery: samples.map((x,i)=>({title:x,image:'',sample:i}))).map((g,i)=>`<div class="gallery-item">${g.image?`<img src="${g.image}" alt="${esc(g.title)}">`:''}<span>${esc(g.title)}</span></div>`).join('');
     
