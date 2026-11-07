@@ -1,4 +1,3 @@
-// মূল ওয়েবসাইটে কভারেজ লোকেশন রেন্ডার করার ফাংশন
 function renderCoverageLocations() {
     const coverageContainer = document.getElementById('coverage-list'); // আপনার index.html-এর কন্টেইনার আইডি
     if (!coverageContainer) return;
