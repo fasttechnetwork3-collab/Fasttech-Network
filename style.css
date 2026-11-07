@@ -8,52 +8,67 @@
 /* Admin editor enhancements */
 .admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-actions button{background:#123b60;color:#d8efff;border:1px solid #28618d;padding:8px 12px;border-radius:6px;cursor:pointer}.admin-actions .danger,.danger{background:#4a1e2a;color:#ffd8df;border:1px solid #773143}.admin-item-info{flex:1;min-width:100px}.admin-previews{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.preview-img{width:86px;height:62px;object-fit:cover;border-radius:7px;border:1px solid #31506f}.admin-item{flex-wrap:wrap}.admin-item small{color:#9db2ca}.admin-form input[type=file]{padding:9px}.admin-form button[hidden]{display:none}
 
-
-/* FastTech premium package cards: rounded price medallion, image panel, navy/blue/cyan palette */
+/* FastTech premium package cards */
 .packages{background:radial-gradient(ellipse at 50% 0%,#102e50 0%,#080f1c 68%);overflow:hidden}
 .packages .section-head{margin-bottom:34px}
 .package-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
 .package-card{position:relative;display:flex;flex-direction:column;border:1px solid #245078;border-radius:24px;overflow:hidden;background:linear-gradient(160deg,#102947 0%,#0a1629 72%);box-shadow:0 18px 48px #0005,0 0 26px #168bff12;transition:transform .25s,border-color .25s,box-shadow .25s}
 .package-card:hover{transform:translateY(-7px);border-color:#25d5ed;box-shadow:0 24px 60px #0007,0 0 32px #168bff28}
-.package-visual{height:190px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,#1767a7 0%,#102b4c 48%,#071426 100%);border-bottom:1px solid #24486b}
-.package-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,#071426aa)}
-.package-visual img{width:100%;height:100%;object-fit:cover;display:block}
-.package-speed-pill{position:absolute;z-index:2;bottom:13px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:8px 17px;border-radius:999px;background:linear-gradient(100deg,#087bfa,#21b7ef);color:#fff;font:800 14px Manrope,sans-serif;box-shadow:0 8px 24px #078bff55}
-.package-body{position:relative;display:flex;flex:1;flex-direction:column;align-items:center;text-align:center;padding:25px 22px 24px}
-.package-price-circle{width:116px;height:116px;margin-top:-82px;position:relative;z-index:3;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid #b9eaff;background:linear-gradient(145deg,#f7fcff,#dcefff);box-shadow:0 0 0 7px #168bff20,0 12px 30px #0005;color:#0756a5}
-.package-price-circle strong{font:900 27px Manrope,sans-serif;letter-spacing:-1px}
-.package-price-circle small{font:600 12px Manrope,sans-serif;color:#426789;margin-top:2px}
-.package-body h3{font-size:27px;color:#f4f9ff;margin:17px 0 5px}
-.package-body>p{color:#aabbd0;font-size:14px;min-height:42px;margin:0 0 12px}
-.package-benefits{width:100%;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;list-style:none;padding:13px 8px;margin:4px 0 20px;border-radius:14px;background:linear-gradient(100deg,#102e4d,#123958);color:#c8eaff;font-size:13px}
-.package-benefits li{white-space:nowrap}
-.package-cta{width:100%;margin-top:auto;border-radius:999px;background:linear-gradient(100deg,#087bfa,#18bce8);box-shadow:0 10px 26px #078bff35;padding:14px 18px}
-.package-art-fallback{font:900 24px Manrope;color:#dff7ff;letter-spacing:.12em;text-shadow:0 0 25px #25d5ed}
-@media(max-width:900px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.package-grid{grid-template-columns:1fr;gap:20px}.package-visual{height:205px}.package-body{padding:24px 20px}.package-price-circle{width:108px;height:108px}.package-body h3{font-size:26px}}
 
-
-/* Image-free package cards, as requested */
-.package-visual{display:none!important}
-.package-speed-header{display:flex;justify-content:center;align-items:center;padding:24px 18px 0;background:transparent}
-.package-speed-header .package-speed-pill{position:static;transform:none;display:inline-flex;align-items:center;justify-content:center;font-size:15px;padding:10px 22px}
-.package-body{padding-top:22px}
-.package-price-circle{margin-top:0}
-@media(max-width:600px){.package-speed-header{padding-top:22px}.package-body{padding:20px 20px 24px}}
-
-
-/* Package price and Mbps presentation inspired by the supplied reference */
-.package-speed-header{display:none!important}
+/* Package price and Mbps presentation */
 .package-body{padding:34px 22px 26px}
-.package-price-circle{width:142px;height:142px;margin:0 auto 22px;border:4px solid #bdeaff;background:radial-gradient(circle at 35% 25%,#f8fdff,#d9efff);box-shadow:0 0 0 7px #168bff1b,0 12px 32px #008dff28;color:#075ba8}
-.package-price-circle strong{font-size:34px;line-height:1.1}
-.package-price-circle small{font-size:14px;color:#426789;margin-top:5px}
-.package-body h3{margin:0 0 22px;font-size:28px}
+.package-price-circle{width:142px;height:142px;margin:0 auto 22px;border:4px solid #bdeaff;background:radial-gradient(circle at 35% 25%,#f8fdff,#d9efff);box-shadow:0 0 0 7px #168bff1b,0 12px 32px #008dff28;color:#075ba8;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.package-price-circle strong{font:900 34px Manrope,sans-serif;line-height:1.1}
+.package-price-circle small{font:600 14px Manrope,sans-serif;color:#426789;margin-top:5px}
+.package-body h3{margin:0 0 22px;font-size:28px;color:#f4f9ff;text-align:center}
+.package-body>p{color:#aabbd0;font-size:14px;min-height:42px;margin:0 0 14px;text-align:center}
 .package-speed-strip{width:100%;max-width:390px;min-height:78px;margin:0 auto 20px;padding:12px 18px;display:flex;align-items:center;justify-content:center;gap:13px;border-radius:18px;background:linear-gradient(100deg,#0c3152,#10466a);border:1px solid #1c638d;box-shadow:inset 0 1px 0 #ffffff0d}
 .package-speed-strip .speed-icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#087bfa,#20c6ed);color:#fff;font-size:23px;box-shadow:0 5px 16px #078bff55}
 .package-speed-strip strong{font:900 30px Manrope,sans-serif;color:#eaf8ff;line-height:1}
 .package-speed-strip small{align-self:center;margin-left:-7px;color:#a9d9f3;font:600 14px Manrope,sans-serif}
-.package-body>p{margin:0 0 14px}
+.package-benefits{width:100%;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;list-style:none;padding:13px 8px;margin:4px 0 20px;border-radius:14px;background:linear-gradient(100deg,#102e4d,#123958);color:#c8eaff;font-size:13px}
+.package-benefits li{white-space:nowrap}
+.package-cta{width:100%;margin-top:auto;border-radius:999px;background:linear-gradient(100deg,#087bfa,#18bce8);box-shadow:0 10px 26px #078bff35;padding:14px 18px}
 
-/* Coverage location management */
-.coverage-locations{margin:18px 0 24px}.coverage-locations ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}.coverage-locations li{padding:9px 14px;border:1px solid #285071;background:#10243a;border-radius:8px;color:#d8edff;font-size:14px}.coverage-empty{font-size:13px;color:#8fa5c0}.admin-item-info{flex:1;min-width:0}
+/* Modern & Premium Coverage Location Badges (Redesigned) */
+#coverageLocations ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#coverageLocations li {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 10px 18px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#coverageLocations li:hover {
+    border-color: #00d2ff;
+    background: rgba(0, 210, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.2);
+}
+
+.coverage-empty {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin: 15px 0;
+    font-style: italic;
+}
+
+@media(max-width:900px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.package-grid{grid-template-columns:1fr;gap:20px}.package-body{padding:24px 20px}.package-price-circle{width:120px;height:120px}}
