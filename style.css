@@ -31,3 +31,26 @@
 .package-art-fallback{font:900 24px Manrope;color:#dff7ff;letter-spacing:.12em;text-shadow:0 0 25px #25d5ed}
 @media(max-width:900px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.package-grid{grid-template-columns:1fr;gap:20px}.package-visual{height:205px}.package-body{padding:24px 20px}.package-price-circle{width:108px;height:108px}.package-body h3{font-size:26px}}
+
+
+/* Image-free package cards, as requested */
+.package-visual{display:none!important}
+.package-speed-header{display:flex;justify-content:center;align-items:center;padding:24px 18px 0;background:transparent}
+.package-speed-header .package-speed-pill{position:static;transform:none;display:inline-flex;align-items:center;justify-content:center;font-size:15px;padding:10px 22px}
+.package-body{padding-top:22px}
+.package-price-circle{margin-top:0}
+@media(max-width:600px){.package-speed-header{padding-top:22px}.package-body{padding:20px 20px 24px}}
+
+
+/* Package price and Mbps presentation inspired by the supplied reference */
+.package-speed-header{display:none!important}
+.package-body{padding:34px 22px 26px}
+.package-price-circle{width:142px;height:142px;margin:0 auto 22px;border:4px solid #bdeaff;background:radial-gradient(circle at 35% 25%,#f8fdff,#d9efff);box-shadow:0 0 0 7px #168bff1b,0 12px 32px #008dff28;color:#075ba8}
+.package-price-circle strong{font-size:34px;line-height:1.1}
+.package-price-circle small{font-size:14px;color:#426789;margin-top:5px}
+.package-body h3{margin:0 0 22px;font-size:28px}
+.package-speed-strip{width:100%;max-width:390px;min-height:78px;margin:0 auto 20px;padding:12px 18px;display:flex;align-items:center;justify-content:center;gap:13px;border-radius:18px;background:linear-gradient(100deg,#0c3152,#10466a);border:1px solid #1c638d;box-shadow:inset 0 1px 0 #ffffff0d}
+.package-speed-strip .speed-icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#087bfa,#20c6ed);color:#fff;font-size:23px;box-shadow:0 5px 16px #078bff55}
+.package-speed-strip strong{font:900 30px Manrope,sans-serif;color:#eaf8ff;line-height:1}
+.package-speed-strip small{align-self:center;margin-left:-7px;color:#a9d9f3;font:600 14px Manrope,sans-serif}
+.package-body>p{margin:0 0 14px}
