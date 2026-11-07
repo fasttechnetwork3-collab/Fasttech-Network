@@ -1,6 +1,6 @@
 const KEY='fasttechPremiumData';
 // --- পাসওয়ার্ড প্রটেকশন সিস্টেম ---
-const ADMIN_PASS = '12345'; // এখানে আপনার পছন্দমতো পাসওয়ার্ড সেট করুন (যেমন: 12345)
+const ADMIN_PASS = '775481'; // এখানে আপনার পছন্দমতো পাসওয়ার্ড সেট করুন (যেমন: 12345)
 
 function checkAdminAuth() {
     const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
