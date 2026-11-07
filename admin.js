@@ -35,40 +35,27 @@ function draw(){
   const gList = document.getElementById('galleryList');
   if(gList) gList.innerHTML=d.gallery.map(g=>`<div class="admin-item">${g.image?`<img class="preview-img" src="${g.image}" alt="">`:''}<b>${esc(g.title)}</b><button type="button" data-del-gallery="${g.id}">মুছুন</button></div>`).join('')||'<p class="muted">গ্যালারিতে এখনো ছবি নেই।</p>';
 }
-
-// Auth check
+// Auth Check Function
 function checkAdminAuth() {
     const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
     const loginPanel = document.getElementById('adminLoginPanel');
     const mainContent = document.getElementById('adminMainContent');
 
     if (isAuth) {
-        if (loginPanel) loginPanel.hidden = true;
-        if (mainContent) mainContent.hidden = false;
-        draw();
+        if (loginPanel) loginPanel.style.display = 'none';
+        if (mainContent) {
+            mainContent.hidden = false;
+            mainContent.style.setProperty('display', 'grid', 'important'); // লগইন হলে ওপেন করবে
+        }
+        if (typeof draw === 'function') draw();
     } else {
-        if (loginPanel) loginPanel.hidden = false;
-        if (mainContent) mainContent.hidden = true;
+        if (loginPanel) loginPanel.style.display = 'block';
+        if (mainContent) {
+            mainContent.hidden = true;
+            mainContent.style.setProperty('display', 'none', 'important'); // না হলে পুরোপুরি লুকিয়ে রাখবে
+        }
     }
 }
-
-document.addEventListener('DOMContentLoaded', ()=>{
-    checkAdminAuth();
-
-    const loginForm = document.getElementById('adminLoginForm');
-    if (loginForm) {
-        loginForm.onsubmit = (e) => {
-            e.preventDefault();
-            const val = document.getElementById('adminPassword').value;
-            if (val === ADMIN_PASS) {
-                sessionStorage.setItem('fasttech_auth', 'true');
-                checkAdminAuth();
-            } else {
-                alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
-            }
-        };
-    }
-
     const sf=document.getElementById('settingsForm');
     if(sf) sf.onsubmit=async e=>{e.preventDefault();try{const d=get(),f=e.target;['name','heroText','phone','whatsapp','address','hours'].forEach(k=>d[k]=f.elements[k].value.trim());if(f.logo.files[0])d.logo=await fileData(f.logo.files[0]);if(f.heroImage.files[0])d.heroImage=await fileData(f.heroImage.files[0]);put(d);f.logo.value='';f.heroImage.value='';draw();alert('তথ্য এই ব্রাউজারে সংরক্ষিত হয়েছে।')}catch(err){alert(err.message)}};
 
