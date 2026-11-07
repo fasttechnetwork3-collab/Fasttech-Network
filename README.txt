@@ -40,10 +40,10 @@ This is a static front-end starter. Admin changes are saved only in the same bro
 For production, connect a secure backend/database (e.g. Supabase or a Cloudflare Worker + database), enforce server-side authentication and role permissions, and integrate your billing/ISP system. Do not put secrets, customer passwords, or payment credentials in frontend files or Local Storage.
 
 
-DEFAULT INTERNET PACKAGES:
-Padma Pluse — 25 Mbps — ৳525
-Meghna — 35 Mbps — ৳600
-Jamuna — 40 Mbps — ৳700
-Turbo — 50 Mbps — ৳800
-Flash — 100 Mbps — ৳1000
-Package artwork is stored in assets/ as SVG files.
+DEFAULT INTERNET PACKAGES
+- Padma Pluse — 25 Mbps — ৳525
+- Meghna — 35 Mbps — ৳600
+- Jamuna — 40 Mbps — ৳700
+- Turbo — 50 Mbps — ৳800
+- Flash — 100 Mbps — ৳1000
+Each package has its own SVG illustration in assets/package-1.svg through package-5.svg.
