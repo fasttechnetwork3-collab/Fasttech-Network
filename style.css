@@ -57,3 +57,29 @@
 
 /* Coverage location management */
 .coverage-locations{margin:18px 0 24px}.coverage-locations ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}.coverage-locations li{padding:9px 14px;border:1px solid #285071;background:#10243a;border-radius:8px;color:#d8edff;font-size:14px}.coverage-empty{font-size:13px;color:#8fa5c0}.admin-item-info{flex:1;min-width:0}
+/* হেডার ব্র্যান্ডিং ডিজাইন */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* লোগো যাতে কেটে না যায় এবং সুন্দর সাইজে বসে */
+.brand img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain; /* লোগো যেন কেটে না গিয়ে পুরোটা ফ্রেমের ভেতর সুন্দর দেখায় */
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* নামের লেখা স্টাইলিং */
+.brand span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
