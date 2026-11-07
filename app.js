@@ -45,7 +45,6 @@ function render(){
             '<p class="coverage-empty">বর্তমানে কভারেজ এলাকার তালিকা আপডেট করা হচ্ছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>';
     }
 
-    // সঠিক সিরিয়ালে প্যাকেজ কার্ড রেন্ডার (প্রথমে প্রাইস সার্কেল, তারপর নাম, স্পিড স্ট্রিপ, বিবরণ ও বেনিফিট)
     document.getElementById('packageGrid').innerHTML=d.packages.map((p,i)=>`
         <article class="package-card">
             <div class="package-body">
