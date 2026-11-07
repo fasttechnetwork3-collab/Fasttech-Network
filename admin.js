@@ -1,6 +1,8 @@
 const KEY='fasttechPremiumData';
-// --- পাসওয়ার্ড প্রটেকশন সিস্টেম ---
-const ADMIN_PASS = '775481'; // এখানে আপনার পছন্দমতো পাসওয়ার্ড সেট করুন (যেমন: 12345)
+// পেজ লোড হলে চেক করবে লগইন করা আছে কি না
+document.addEventListener('DOMContentLoaded', () => {
+    checkAdminAuth();
+});
 
 function checkAdminAuth() {
     const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
@@ -10,29 +12,27 @@ function checkAdminAuth() {
     if (isAuth) {
         if (loginPanel) loginPanel.hidden = true;
         if (mainContent) mainContent.hidden = false;
+        draw(); // পাসওয়ার্ড সঠিক হলে তবেই অ্যাডমিন প্যানেলের ডেটা ও এডিট অপশন লোড হবে
     } else {
         if (loginPanel) loginPanel.hidden = false;
         if (mainContent) mainContent.hidden = true;
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    checkAdminAuth();
-    
-    const loginForm = document.getElementById('adminLoginForm');
-    if (loginForm) {
-        loginForm.onsubmit = (e) => {
-            e.preventDefault();
-            const val = document.getElementById('adminPassword').value;
-            if (val === ADMIN_PASS) {
-                sessionStorage.setItem('fasttech_auth', 'true');
-                checkAdminAuth();
-            } else {
-                alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
-            }
-        };
-    }
-});
+// লগইন ফর্ম সাবমিট হ্যান্ডলার
+const adminLoginForm = document.getElementById('adminLoginForm');
+if (adminLoginForm) {
+    adminLoginForm.onsubmit = (e) => {
+        e.preventDefault();
+        const val = document.getElementById('adminPassword').value;
+        if (val === ADMIN_PASS) {
+            sessionStorage.setItem('fasttech_auth', 'true');
+            checkAdminAuth();
+        } else {
+            alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
+        }
+    };
+}
 document.addEventListener('DOMContentLoaded', checkAuth);
 checkAuth();
 const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',logo:'',heroImage:'',coverageLocations:[],packages:[
