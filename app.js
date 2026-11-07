@@ -39,4 +39,52 @@ function render(){
 
     const coverageEl=document.getElementById('coverageLocations');
     if(coverageEl){
-        const locations=d.coverageLocations
+        const locations=d.coverageLocations||[];
+        coverageEl.innerHTML=locations.length?
+            '<ul>'+locations.map(x=>`<li>📍 ${esc(x.name)}</li>`).join('')+'</ul>':
+            '<p class="coverage-empty">বর্তমানে কভারেজ এলাকার তালিকা আপডেট করা হচ্ছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>';
+    }
+
+    // সঠিক সিরিয়ালে প্যাকেজ কার্ড রেন্ডার (প্রথমে প্রাইস সার্কেল, তারপর নাম, স্পিড স্ট্রিপ, বিবরণ ও বেনিফিট)
+    document.getElementById('packageGrid').innerHTML=d.packages.map((p,i)=>`
+        <article class="package-card">
+            <div class="package-body">
+                <div class="package-price-circle">
+                    <strong>${esc(p.price)}</strong>
+                    <small>/month</small>
+                </div>
+                <h3>${esc(p.title)}</h3>
+                <div class="package-speed-strip">
+                    <span class="speed-icon">⚡</span>
+                    <strong>${esc(String(p.speed).replace(/\s*Mbps/i,''))}</strong>
+                    <small>Mbps</small>
+                </div>
+                <p>${esc(p.desc||'আপনার প্রয়োজন অনুযায়ী ইন্টারনেট প্যাকেজ।')}</p>
+                <ul class="package-benefits">
+                    <li>✓ YouTube</li>
+                    <li>✓ Facebook</li>
+                    <li>✓ BDIX</li>
+                </ul>
+                <a class="btn package-cta" href="#contact">Subscribe Now <b>→</b></a>
+            </div>
+        </article>
+    `).join('');
+
+    const samples=['Network installation','Fiber optic connectivity','FastTech team'];
+    document.getElementById('galleryGrid').innerHTML=(d.gallery.length?d.gallery: samples.map((x,i)=>({title:x,image:'',sample:i}))).map((g,i)=>`<div class="gallery-item">${g.image?`<img src="${g.image}" alt="${esc(g.title)}">`:''}<span>${esc(g.title)}</span></div>`).join('');
+    
+    document.getElementById('year').textContent=new Date().getFullYear();
+}
+
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mainNav').classList.toggle('open'));
+
+document.getElementById('contactForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const d=getData(),f=new FormData(e.target);
+    const msg=`নতুন সংযোগের অনুরোধ%0Aনাম: ${encodeURIComponent(f.get('name'))}%0Aমোবাইল: ${encodeURIComponent(f.get('phone'))}%0Aএলাকা: ${encodeURIComponent(f.get('area'))}%0Aবার্তা: ${encodeURIComponent(f.get('message'))}`;
+    const number=(d.whatsapp||'').replace(/\D/g,'');
+    if(number.length>=10) window.open(`https://wa.me/${number}?text=${msg}`,'_blank');
+    else alert('WhatsApp নম্বর Admin Panel থেকে সেট করুন।');
+});
+
+render();
