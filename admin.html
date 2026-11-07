@@ -3,6 +3,17 @@
 <section class="inner-hero"><div class="wrap"><span class="eyebrow">WEBSITE CONTENT MANAGER</span><h1>Admin <em>Control Panel</em></h1><p class="muted">ওয়েবসাইটের লেখা, লোগো, ব্যানার, প্যাকেজ ও ছবি পরিচালনা করুন।</p></div></section>
 <main class="wrap admin-wrap">
 <div class="warning"><b>ডেমো সংস্করণের সীমাবদ্ধতা:</b> এই সংস্করণে Admin Panel-এর পরিবর্তন একই ব্রাউজারের Local Storage-এ সেভ হয়। লাইভ ওয়েবসাইটে সবার জন্য পরিবর্তন প্রকাশ, নিরাপদ Admin Login এবং Customer Dashboard-এর বাস্তব ডেটার জন্য পরবর্তী ধাপে Supabase/Backend যুক্ত করতে হবে। Public সাইটে এই Demo Admin লিংক নিরাপদ লগইন ছাড়া প্রকাশ করবেন না।</div>
+<!-- Admin Login Panel -->
+<div class="panel" id="adminLoginPanel" style="max-width: 450px; margin: 20px auto;">
+  <h2>অ্যাডমিন লগইন</h2>
+  <p class="muted">অ্যাডমিন প্যানেলে প্রবেশ করতে পাসওয়ার্ড দিন।</p>
+  <form id="adminLoginForm" class="admin-form">
+    <label>পাসওয়ার্ড
+      <input type="password" id="adminPassword" required placeholder="পাসওয়ার্ড লিখুন">
+    </label>
+    <button class="btn" type="submit">লগইন করুন</button>
+  </form>
+</div>
 <div class="admin-grid">
 <section class="panel"><h2>ব্র্যান্ড ও ওয়েবসাইট</h2><form id="settingsForm" class="admin-form">
 <label>প্রতিষ্ঠানের নাম<input name="name" required></label><label>হোমপেজের পরিচিতি<textarea name="heroText" rows="3"></textarea></label><label>ফোন নম্বর<input name="phone"></label><label>WhatsApp নম্বর (দেশের কোডসহ, শুধু সংখ্যা)<input name="whatsapp"></label><label>অফিসের ঠিকানা<input name="address"></label><label>সাপোর্ট সময়<input name="hours"></label><label>লোগো পরিবর্তন<input name="logo" type="file" accept="image/*"></label><label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label><button class="btn">তথ্য সংরক্ষণ করুন</button></form><div class="admin-previews" id="brandPreviews"></div></section>
