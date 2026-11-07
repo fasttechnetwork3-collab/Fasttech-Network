@@ -1,4 +1,40 @@
 const KEY='fasttechPremiumData';
+// অ্যাডমিন পাসওয়ার্ড (আপনি আপনার ইচ্ছামতো পরিবর্তন করে নিতে পারেন)
+const ADMIN_PASSWORD = '12345'; // <-- আপনার পছন্দমতো পাসওয়ার্ড সেট করুন
+
+function checkAuth() {
+    const isLogged = sessionStorage.getItem('adminAuth') === 'true';
+    const loginPanel = document.getElementById('adminLoginPanel');
+    const adminGrid = document.querySelector('.admin-grid');
+    const warningBox = document.querySelector('.warning');
+
+    if (isLogged) {
+        if(loginPanel) loginPanel.hidden = true;
+        if(adminGrid) adminGrid.hidden = false;
+        if(warningBox) warningBox.hidden = false;
+    } else {
+        if(loginPanel) loginPanel.hidden = false;
+        if(adminGrid) adminGrid.hidden = true;
+        if(warningBox) warningBox.hidden = true;
+    }
+}
+
+// লগইন ফর্ম সাবমিট হ্যান্ডলার
+document.getElementById('adminLoginForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const passInput = document.getElementById('adminPassword').value;
+    
+    if (passInput === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminAuth', 'true');
+        checkAuth();
+    } else {
+        alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে আবার চেষ্টা করুন।');
+    }
+});
+
+// পেজ লোড হলে চেক করবে
+document.addEventListener('DOMContentLoaded', checkAuth);
+checkAuth();
 const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',logo:'',heroImage:'',coverageLocations:[],packages:[
 {id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য',image:'assets/package-1.svg'},
 {id:2,title:'Meghna',speed:'35 Mbps',price:'৳600',desc:'পরিবারের একাধিক ডিভাইসের জন্য',image:'assets/package-2.svg'},
