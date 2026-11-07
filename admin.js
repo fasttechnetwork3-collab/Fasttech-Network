@@ -1,38 +1,38 @@
 const KEY='fasttechPremiumData';
-// অ্যাডমিন পাসওয়ার্ড (আপনি আপনার ইচ্ছামতো পরিবর্তন করে নিতে পারেন)
-const ADMIN_PASSWORD = '12345'; // <-- আপনার পছন্দমতো পাসওয়ার্ড সেট করুন
+// --- পাসওয়ার্ড প্রটেকশন সিস্টেম ---
+const ADMIN_PASS = '12345'; // এখানে আপনার পছন্দমতো পাসওয়ার্ড সেট করুন (যেমন: 12345)
 
-function checkAuth() {
-    const isLogged = sessionStorage.getItem('adminAuth') === 'true';
+function checkAdminAuth() {
+    const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
     const loginPanel = document.getElementById('adminLoginPanel');
-    const adminGrid = document.querySelector('.admin-grid');
-    const warningBox = document.querySelector('.warning');
+    const mainContent = document.getElementById('adminMainContent');
 
-    if (isLogged) {
-        if(loginPanel) loginPanel.hidden = true;
-        if(adminGrid) adminGrid.hidden = false;
-        if(warningBox) warningBox.hidden = false;
+    if (isAuth) {
+        if (loginPanel) loginPanel.hidden = true;
+        if (mainContent) mainContent.hidden = false;
     } else {
-        if(loginPanel) loginPanel.hidden = false;
-        if(adminGrid) adminGrid.hidden = true;
-        if(warningBox) warningBox.hidden = true;
+        if (loginPanel) loginPanel.hidden = false;
+        if (mainContent) mainContent.hidden = true;
     }
 }
 
-// লগইন ফর্ম সাবমিট হ্যান্ডলার
-document.getElementById('adminLoginForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const passInput = document.getElementById('adminPassword').value;
+document.addEventListener('DOMContentLoaded', () => {
+    checkAdminAuth();
     
-    if (passInput === ADMIN_PASSWORD) {
-        sessionStorage.setItem('adminAuth', 'true');
-        checkAuth();
-    } else {
-        alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে আবার চেষ্টা করুন।');
+    const loginForm = document.getElementById('adminLoginForm');
+    if (loginForm) {
+        loginForm.onsubmit = (e) => {
+            e.preventDefault();
+            const val = document.getElementById('adminPassword').value;
+            if (val === ADMIN_PASS) {
+                sessionStorage.setItem('fasttech_auth', 'true');
+                checkAdminAuth();
+            } else {
+                alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
+            }
+        };
     }
 });
-
-// পেজ লোড হলে চেক করবে
 document.addEventListener('DOMContentLoaded', checkAuth);
 checkAuth();
 const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',logo:'',heroImage:'',coverageLocations:[],packages:[
