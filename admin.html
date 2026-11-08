@@ -1,11 +1,36 @@
-<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Panel | FastTech Network</title><link rel="stylesheet" href="style.css"></head><body>
-<header class="header"><div class="wrap nav"><a class="brand" href="index.html">
-  <img id="siteLogo" src="assets/fasttech-logo.jpg" alt="FastTech Network">
-  <span id="siteName">FastTech Network</span></a><small>ADMIN CONTROL CENTER</small></span></a><a class="btn btn-small" href="index.html">ওয়েবসাইট দেখুন ↗</a></div></header>
-<section class="inner-hero"><div class="wrap"><span class="eyebrow">WEBSITE CONTENT MANAGER</span><h1>Admin <em>Control Panel</em></h1><p class="muted">ওয়েবসাইটের লেখা, লোগো, ব্যানার, প্যাকেজ ও ছবি পরিচালনা করুন।</p></div></section>
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Panel | FastTech Network</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <img id="siteLogo" src="assets/fasttech-logo.jpg" alt="FastTech Network">
+      <span id="siteName">FastTech Network</span>
+    </a>
+    <small>ADMIN CONTROL CENTER</small>
+    <a class="btn btn-small" href="index.html">ওয়েবসাইট দেখুন ↗</a>
+  </div>
+</header>
+
+<section class="inner-hero">
+  <div class="wrap">
+    <span class="eyebrow">WEBSITE CONTENT MANAGER</span>
+    <h1>Admin <em>Control Panel</em></h1>
+    <p class="muted">ওয়েবসাইটের লেখা, লোগো, ব্যানার, প্যাকেজ ও ছবি পরিচালনা করুন।</p>
+  </div>
+</section>
+
 <main class="wrap admin-wrap">
 
-<!-- শুধুমাত্র এই একটি লগইন বক্স দেখাবে, পেজে স্ক্রল করার মতো আর কিছু থাকবে না -->
+<!-- শুধুমাত্র এই একটি লগইন বক্স দেখাবে -->
 <div class="panel" id="adminLoginPanel" style="max-width: 480px; margin: 40px auto; text-align: left;">
   <h2>অ্যাডমিন প্যানেল লগইন</h2>
   <p class="muted">নিরাপত্তার জন্য পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
@@ -17,22 +42,84 @@
   </form>
 </div>
 
-<!-- পাসওয়ার্ড দেওয়ার আগ পর্যন্ত এই নিচের পুরো অংশটি সম্পূর্ণ গায়েব থাকবে -->
+<!-- পাসওয়ার্ড দেওয়ার পর মূল এডমিন সেকশন প্রদর্শিত হবে -->
 <div class="admin-grid" id="adminMainContent" hidden style="display: none !important;">
-<div class="warning"><b>ডেমো সংস্করণের সীমাবদ্ধতা:</b> এই সংস্করণে Admin Panel-এর পরিবর্তন একই ব্রাউজারের Local Storage-এ সেভ হয়। লাইভ ওয়েবসাইটে সবার জন্য পরিবর্তন প্রকাশ, নিরাপদ Admin Login এবং Customer Dashboard-এর বাস্তব ডেটার জন্য পরবর্তী ধাপে Supabase/Backend যুক্ত করতে হবে। Public সাইটে এই Demo Admin লিংক নিরাপদ লগইন ছাড়া প্রকাশ করবেন না।</div>
-<section class="panel"><h2>ব্র্যান্ড ও ওয়েবসাইট</h2><form id="settingsForm" class="admin-form">
-<label>প্রতিষ্ঠানের নাম<input name="name" required></label><label>হোমপেজের পরিচিতি<textarea name="heroText" rows="3"></textarea></label><label>ফোন নম্বর<input name="phone"></label><label>WhatsApp নম্বর (দেশের কোডসহ, শুধু সংখ্যা)<input name="whatsapp"></label><label>অফিসের ঠিকানা<input name="address"></label><label>সাপোর্ট সময়<input name="hours"></label><label>লোগো পরিবর্তন<input name="logo" type="file" accept="image/*"></label><label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label><button class="btn" type="submit">তথ্য সংরক্ষণ করুন</button></form><div class="admin-previews" id="brandPreviews"></div></section>
 
-<section class="panel"><h2 id="packageFormTitle">নতুন প্যাকেজ যোগ করুন</h2><form id="packageForm" class="admin-form"><input name="id" type="hidden"><label>প্যাকেজের নাম<input name="title" required placeholder="যেমন: Home Plus"></label><label>স্পিড<input name="speed" required placeholder="যেমন: 30 Mbps"></label><label>মাসিক মূল্য<input name="price" required placeholder="যেমন: ৳800"></label><label>বিবরণ<input name="desc" placeholder="প্যাকেজের সংক্ষিপ্ত বিবরণ"></label><label>প্যাকেজের ছবি<input name="image" type="file" accept="image/*"></label><div class="admin-actions"><button class="btn" id="packageSave" type="submit">প্যাকেজ যোগ করুন</button><button class="danger" type="button" id="cancelEdit" hidden>এডিট বাতিল</button></div></form><div class="admin-list" id="packageList"></div></section>
+<section class="panel">
+  <h2>ব্র্যান্ড ও ওয়েবসাইট</h2>
+  <form id="settingsForm" class="admin-form">
+    <label>প্রতিষ্ঠানের নাম<input name="name" required></label>
+    <label>হোমপেজের পরিচিতি<textarea name="heroText" rows="3"></textarea></label>
+    <label>ফোন নম্বর<input name="phone"></label>
+    <label>WhatsApp নম্বর (দেশের কোডসহ, শুধু সংখ্যা)<input name="whatsapp"></label>
+    <label>অফিসের ঠিকানা<input name="address"></label>
+    <label>সাপোর্ট সময়<input name="hours"></label>
+    <label>লোগো পরিবর্তন<input name="logo" type="file" accept="image/*"></label>
+    <label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label>
+    <button class="btn" type="submit">তথ্য সংরক্ষণ করুন</button>
+  </form>
+  <div class="admin-previews" id="brandPreviews"></div>
+</section>
 
-<section class="panel"><h2>Coverage Location Management</h2>
-<p class="muted">ওয়েবসাইটের Coverage Section-এ দেখানোর জন্য এলাকার নাম যোগ, সম্পাদনা বা মুছে ফেলুন।</p>
-<form id="coverageForm" class="admin-form"><input name="id" type="hidden">
-<label>এলাকার নাম<input name="name" required placeholder="যেমন: Amirabad, Lohagara"></label>
-<div class="admin-actions"><button class="btn" id="coverageSave" type="submit">Add Location</button><button class="danger" type="button" id="coverageCancel" hidden>এডিট বাতিল</button></div>
-</form><div class="admin-list" id="coverageList"></div></section>
+<section class="panel">
+  <h2 id="packageFormTitle">নতুন প্যাকেজ যোগ করুন</h2>
+  <form id="packageForm" class="admin-form">
+    <input name="id" type="hidden">
+    <label>প্যাকেজের নাম<input name="title" required placeholder="যেমন: Home Plus"></label>
+    <label>স্পিড<input name="speed" required placeholder="যেমন: 30 Mbps"></label>
+    <label>মাসিক মূল্য<input name="price" required placeholder="যেমন: ৳800"></label>
+    <label>বিবরণ<input name="desc" placeholder="প্যাকেজের সংক্ষিপ্ত বিবরণ"></label>
+    <label>প্যাকেজের ছবি<input name="image" type="file" accept="image/*"></label>
+    <div class="admin-actions">
+      <button class="btn" id="packageSave" type="submit">প্যাকেজ যোগ করুন</button>
+      <button class="danger" type="button" id="cancelEdit" hidden>এডিট বাতিল</button>
+    </div>
+  </form>
+  <div class="admin-list" id="packageList"></div>
+</section>
 
-<section class="panel"><h2>গ্যালারিতে ছবি যুক্ত করুন</h2><form id="galleryForm" class="admin-form"><label>ছবির শিরোনাম<input name="title" required></label><label>এক বা একাধিক ছবি নির্বাচন<input name="images" type="file" accept="image/*" multiple required></label><button class="btn" type="submit">গ্যালারিতে যোগ করুন</button></form><div class="admin-list" id="galleryList"></div></section>
+<section class="panel">
+  <h2>Coverage Location Management</h2>
+  <p class="muted">ওয়েবসাইটের Coverage Section-এ দেখানোর জন্য এলাকার নাম যোগ, সম্পাদনা বা মুছে ফেলুন।</p>
+  <form id="coverageForm" class="admin-form">
+    <input name="id" type="hidden">
+    <label>এলাকার নাম<input name="name" required placeholder="যেমন: Amirabad, Lohagara"></label>
+    <div class="admin-actions">
+      <button class="btn" id="coverageSave" type="submit">Add Location</button>
+      <button class="danger" type="button" id="coverageCancel" hidden>এডিট বাতিল</button>
+    </div>
+  </form>
+  <div class="admin-list" id="coverageList"></div>
+</section>
 
-<section class="panel"><h2>ডেটা ব্যাকআপ ও রিস্টোর</h2><p class="muted">আপনার বর্তমান ব্রাউজারের ওয়েবসাইটের তথ্য JSON ফাইলে ডাউনলোড করুন। প্রয়োজনে পরে Restore করতে পারবেন।</p><button class="btn" id="backup" type="button">Backup Download</button><label class="admin-form">Backup Restore<input id="restore" type="file" accept="application/json"></label><button class="danger" id="reset" type="button">ডেমো ডেটা রিসেট</button></section>
-</div></main><footer class="footer"><div class="wrap footer-bottom"><span>FastTech Network Admin</span><a href="index.html">Home</a></div></footer><script src="admin.js"></script></body></html>
+<section class="panel">
+  <h2>গ্যালারিতে ছবি যুক্ত করুন</h2>
+  <form id="galleryForm" class="admin-form">
+    <label>ছবির শিরোনাম<input name="title" required></label>
+    <label>এক বা একাধিক ছবি নির্বাচন<input name="images" type="file" accept="image/*" multiple required></label>
+    <button class="btn" type="submit">গ্যালারিতে যোগ করুন</button>
+  </form>
+  <div class="admin-list" id="galleryList"></div>
+</section>
+
+<section class="panel">
+  <h2>ডেটা ব্যাকআপ ও রিস্টোর</h2>
+  <p class="muted">আপনার বর্তমান ওয়েবসাইটের তথ্য JSON ফাইলে ডাউনলোড করুন। প্রয়োজনে পরে Restore করতে পারবেন।</p>
+  <button class="btn" id="backup" type="button">Backup Download</button>
+  <label class="admin-form">Backup Restore<input id="restore" type="file" accept="application/json"></label>
+  <button class="danger" id="reset" type="button">ডেমো ডেটা রিসেট</button>
+</section>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-bottom">
+    <span>FastTech Network Admin</span>
+    <a href="index.html">Home</a>
+  </div>
+</footer>
+
+<script src="admin.js"></script>
+</body>
+</html>
