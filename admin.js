@@ -292,10 +292,23 @@ function setupActions() {
             draw();
         }
     };
-}
-
-window.addEventListener('DOMContentLoaded', () => {
+	}
+document.addEventListener('DOMContentLoaded', () => {
     checkAdminAuth();
-    initLoginForm();
     setupActions();
+
+    // সরাসরি ফর্ম সাবমিট হ্যান্ডলার যুক্ত করা হলো
+    const loginForm = document.getElementById('adminLoginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const passInput = document.getElementById('adminPassword');
+            if (passInput && passInput.value === ADMIN_PASS) {
+                sessionStorage.setItem('fasttech_auth', 'true');
+                checkAdminAuth(); // প্যানেল ওপেন করবে এবং ডেটা লোড করবে
+            } else {
+                alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
+            }
+        });
+    }
 });
