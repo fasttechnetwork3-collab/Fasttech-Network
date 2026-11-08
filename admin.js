@@ -81,8 +81,6 @@ function draw() {
             if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = d[k] || '';
         });
     }
-    const logoEl = document.getElementById('adminLogo');
-    if (logoEl) logoEl.src = d.logo || 'assets/fasttech-logo.jpg';
     
     const previews = document.getElementById('brandPreviews');
     if (previews) previews.innerHTML = `${d.logo ? `<img class="preview-img" src="${d.logo}" alt="Logo preview">` : ''}${d.heroImage ? `<img class="preview-img" src="${d.heroImage}" alt="Banner preview">` : ''}`;
@@ -97,6 +95,7 @@ function draw() {
     if (gList) gList.innerHTML = d.gallery.map(g => `<div class="admin-item">${g.image ? `<img class="preview-img" src="${g.image}" alt="">` : ''}<b>${esc(g.title)}</b><button type="button" data-del-gallery="${g.id}">মুছুন</button></div>`).join('') || '<p class="muted">গ্যালারিতে এখনো ছবি নেই।</p>';
 }
 
+// চেক করবে লগইন করা আছে কি না
 function checkAdminAuth() {
     const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
     const loginPanel = document.getElementById('adminLoginPanel');
@@ -104,28 +103,20 @@ function checkAdminAuth() {
 
     if (isAuth) {
         if (loginPanel) loginPanel.style.display = 'none';
-        if (mainContent) {
-            mainContent.hidden = false;
-            mainContent.style.display = 'grid';
-            mainContent.style.setProperty('display', 'grid', 'important');
-        }
+        if (mainContent) mainContent.style.display = 'grid'; // সরাসরি গ্রিড আকারে দেখাবে
         loadAdminDataFromSupabase();
     } else {
         if (loginPanel) loginPanel.style.display = 'block';
-        if (mainContent) {
-            mainContent.hidden = true;
-            mainContent.style.display = 'none';
-            mainContent.style.setProperty('display', 'none', 'important');
-        }
+        if (mainContent) mainContent.style.display = 'none';
     }
 }
 
-// admin.html-এর onclick হ্যান্ডলার
+// পাসওয়ার্ড সঠিক হলে সেশন সেভ করে পেজ রিলোড করবে (সাথে সাথে এডিট প্যানেল চলে আসবে)
 function handleLogin() {
     const passInput = document.getElementById('adminPassword');
     if (passInput && passInput.value === ADMIN_PASS) {
         sessionStorage.setItem('fasttech_auth', 'true');
-        checkAdminAuth();
+        window.location.reload(); 
     } else {
         alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
     }
@@ -136,3 +127,171 @@ function setupActions() {
     if (sf) sf.onsubmit = async e => {
         e.preventDefault();
         try {
+            const d = get(), f = e.target;
+            ['name','heroText','phone','whatsapp','address','hours'].forEach(k => d[k] = f.elements[k].value.trim());
+            if (f.logo.files[0]) d.logo = await fileData(f.logo.files[0]);
+            if (f.heroImage.files[0]) d.heroImage = await fileData(f.heroImage.files[0]);
+            await put(d);
+            f.logo.value = ''; f.heroImage.value = '';
+            draw();
+            alert('তথ্য সফলভাবে সংরক্ষিত হয়েছে।');
+        } catch (err) { alert(err.message); }
+    };
+
+    const pf = document.getElementById('packageForm');
+    function clearPackage() {
+        if (!pf) return;
+        pf.reset();
+        pf.elements.id.value = '';
+        document.getElementById('packageFormTitle').textContent = 'নতুন প্যাকেজ যোগ করুন';
+        document.getElementById('packageSave').textContent = 'প্যাকেজ যোগ করুন';
+        document.getElementById('cancelEdit').hidden = true;
+    }
+    if (pf) pf.onsubmit = async e => {
+        e.preventDefault();
+        try {
+            const d = get(), f = e.target, id = f.elements.id.value, old = d.packages.find(p => p.id == id), image = f.image.files[0] ? await fileData(f.image.files[0]) : (old?.image || '');
+            const p = { id: id ? Number(id) : Date.now(), title: f.title.value.trim(), speed: f.speed.value.trim(), price: f.price.value.trim(), desc: f.desc.value.trim(), image };
+            if (id) d.packages = d.packages.map(x => x.id == id ? p : x);
+            else d.packages.push(p);
+            await put(d);
+            clearPackage();
+            draw();
+        } catch (err) { alert(err.message); }
+    };
+    const cancelEditBtn = document.getElementById('cancelEdit');
+    if (cancelEditBtn) cancelEditBtn.onclick = clearPackage;
+
+    const cf = document.getElementById('coverageForm');
+    function clearCoverage() {
+        if (!cf) return;
+        cf.reset();
+        cf.elements.id.value = '';
+        document.getElementById('coverageSave').textContent = 'Add Location';
+        document.getElementById('coverageCancel').hidden = true;
+    }
+    if (cf) cf.onsubmit = async e => {
+        e.preventDefault();
+        const d = get(), id = cf.elements.id.value, name = cf.elements.name.value.trim();
+        if (!name) return;
+        d.coverageLocations = d.coverageLocations || [];
+        if (id) {
+            d.coverageLocations = d.coverageLocations.map(x => String(x.id) === String(id) ? {...x, name} : x);
+        } else {
+            if (d.coverageLocations.some(x => x.name.toLowerCase() === name.toLowerCase())) {
+                alert('এই এলাকার নাম আগে থেকেই আছে।');
+                return;
+            }
+            d.coverageLocations.push({ id: Date.now(), name });
+        }
+        await put(d);
+        clearCoverage();
+        draw();
+    };
+    const coverageCancelBtn = document.getElementById('coverageCancel');
+    if (coverageCancelBtn) coverageCancelBtn.onclick = clearCoverage;
+
+    const gf = document.getElementById('galleryForm');
+    if (gf) gf.onsubmit = async e => {
+        e.preventDefault();
+        try {
+            const f = e.target, d = get(), files = [...f.images.files];
+            for (const file of files) d.gallery.push({ id: Date.now() + Math.random(), title: files.length > 1 ? `${f.title.value} (${file.name})` : f.title.value, image: await fileData(file) });
+            await put(d);
+            f.reset();
+            draw();
+        } catch (err) { alert(err.message); }
+    };
+
+    document.addEventListener('click', async e => {
+        const t = e.target, d = get();
+        if (t.dataset.editCoverage) {
+            const loc = (d.coverageLocations || []).find(x => String(x.id) === String(t.dataset.editCoverage));
+            if (loc && cf) {
+                cf.elements.id.value = loc.id;
+                cf.elements.name.value = loc.name;
+                document.getElementById('coverageSave').textContent = 'পরিবর্তন সংরক্ষণ';
+                document.getElementById('coverageCancel').hidden = false;
+                cf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        if (t.dataset.delCoverage) {
+            if (confirm('এই Coverage Location মুছে ফেলবেন?')) {
+                d.coverageLocations = (d.coverageLocations || []).filter(x => String(x.id) !== String(t.dataset.delCoverage));
+                await put(d);
+                draw();
+            }
+        }
+        if (t.dataset.editPackage) {
+            const p = d.packages.find(x => x.id == t.dataset.editPackage);
+            if (!p || !pf) return;
+            pf.elements.id.value = p.id;
+            pf.elements.title.value = p.title;
+            pf.elements.speed.value = p.speed;
+            pf.elements.price.value = p.price;
+            pf.elements.desc.value = p.desc;
+            document.getElementById('packageFormTitle').textContent = 'প্যাকেজ সম্পাদনা করুন';
+            document.getElementById('packageSave').textContent = 'পরিবর্তন সংরক্ষণ';
+            document.getElementById('cancelEdit').hidden = false;
+            pf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (t.dataset.delPackage) {
+            if (confirm('এই প্যাকেজটি মুছে ফেলবেন?')) {
+                d.packages = d.packages.filter(p => p.id != t.dataset.delPackage);
+                await put(d);
+                draw();
+            }
+        }
+        if (t.dataset.delGallery) {
+            d.gallery = d.gallery.filter(g => g.id != t.dataset.delGallery);
+            await put(d);
+            draw();
+        }
+    });
+
+    const backupBtn = document.getElementById('backup');
+    if (backupBtn) backupBtn.onclick = () => {
+        const b = new Blob([JSON.stringify(get(), null, 2)], { type: 'application/json' }), a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = 'fasttech-network-backup.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    };
+
+    const restoreInput = document.getElementById('restore');
+    if (restoreInput) restoreInput.onchange = async e => {
+        try {
+            const d = JSON.parse(await e.target.files[0].text());
+            if (!Array.isArray(d.packages) || !Array.isArray(d.gallery)) throw Error();
+            await put({...clone(base), ...d});
+            draw();
+            alert('Backup restore হয়েছে।');
+        } catch { alert('সঠিক FastTech JSON backup নির্বাচন করুন।'); }
+        e.target.value = '';
+    };
+
+    const resetBtn = document.getElementById('reset');
+    if (resetBtn) resetBtn.onclick = async () => {
+        if (confirm('সব ডেটা রিসেট করবেন?')) {
+            await put(clone(base));
+            if (typeof clearPackage === 'function') clearPackage();
+            draw();
+        }
+    };
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    checkAdminAuth();
+    setupActions();
+
+    // পাসওয়ার্ড বক্সে এন্টার (Enter) প্রেস করলেও যেন লগইন হয়
+    const passInput = document.getElementById('adminPassword');
+    if (passInput) {
+        passInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleLogin();
+            }
+        });
+    }
+});
