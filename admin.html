@@ -34,12 +34,12 @@
 <div class="panel" id="adminLoginPanel" style="max-width: 480px; margin: 40px auto; text-align: left;">
   <h2>অ্যাডমিন প্যানেল লগইন</h2>
   <p class="muted">নিরাপত্তার জন্য পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
-  <form id="adminLoginForm" class="admin-form">
+  <div class="admin-form">
     <label>অ্যাডমিন পাসওয়ার্ড
-      <input type="password" id="adminPassword" required placeholder="পাসওয়ার্ড লিখুন">
+      <input type="password" id="adminPassword" placeholder="পাসওয়ার্ড লিখুন">
     </label>
-    <button class="btn" type="submit" style="width:100%; margin-top:15px;">লগইন করুন</button>
-  </form>
+    <button class="btn" type="button" onclick="handleLogin()" style="width:100%; margin-top:15px;">লগইন করুন</button>
+  </div>
 </div>
 
 <!-- পাসওয়ার্ড দেওয়ার পর মূল এডমিন সেকশন প্রদর্শিত হবে -->
