@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://project/ojfessfzctevkwzcfzse.supabase.co'; // আপনার প্রজেক্টের ইউআরএল
-const SUPABASE_KEY = 'sb_publishable_Fk_I6gvQDJCHrgU5bNhRqQ_acBR83um'; // আপনার Publishable Key এখানে বসাবেন
+const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co'; // সঠিক ইউআরএল বসানো হয়েছে
+const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJCHrgU5bNhRqQ_acBR83um'; // সঠিক Publishable Key
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KEY = 'fasttechPremiumData';
@@ -21,10 +21,8 @@ const defaults = {
     coverageLocations: []
 };
 
-// গ্লোবাল স্টেট ভেরিয়েবল
 let siteDataState = {...defaults};
 
-// Supabase থেকে ডেটা লোড করার ফাংশন
 async function loadFromSupabase() {
     try {
         const { data, error } = await supabase
@@ -34,28 +32,20 @@ async function loadFromSupabase() {
             .single();
         
         if (error || !data || !data.content) {
-            console.log('ক্লাউডে ডেটা নেই, লোকাল স্টোরেজ বা ডিফল্ট ডেটা ব্যবহার করা হচ্ছে...');
             const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
             siteDataState = {...defaults, ...saved};
         } else {
             siteDataState = {...defaults, ...data.content};
         }
     } catch (e) {
-        console.error('লোড করতে সমস্যা:', e);
         const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
         siteDataState = {...defaults, ...saved};
     }
     render();
 }
 
-function getData() {
-    return siteDataState;
-}
-
-function saveData(d) {
-    siteDataState = d;
-    localStorage.setItem(KEY, JSON.stringify(d));
-}
+function getData() { return siteDataState; }
+function saveData(d) { siteDataState = d; localStorage.setItem(KEY, JSON.stringify(d)); }
 
 function esc(s='') {
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -94,7 +84,6 @@ function render() {
     document.getElementById('year').textContent = new Date().getFullYear();
 }
 
-// ইভেন্ট লিসেনার ও রিয়েল-টাইম সিঙ্ক
 document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
 
 document.getElementById('contactForm').addEventListener('submit', e => {
@@ -106,11 +95,9 @@ document.getElementById('contactForm').addEventListener('submit', e => {
     else alert('WhatsApp নম্বর Admin Panel থেকে সেট করুন।');
 });
 
-// পেজ লোড হওয়ার সাথে সাথে ক্লাউড থেকে ডেটা ফেচ করা
 window.addEventListener('DOMContentLoaded', () => {
     loadFromSupabase();
     
-    // রিয়েল-টাইম আপডেট লিসেনার (অ্যাডমিন প্যানেল থেকে সেভ করার সাথে সাথে সাইট আপডেট হয়ে যাবে)
     supabase
         .channel('public:site_data')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'site_data' }, payload => {
