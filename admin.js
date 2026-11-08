@@ -1,9 +1,9 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Fk_I6gvQDJCHrgU5bNhRqQ_acBR83um'; // আপনার সম্পূর্ণ Publishable Key এখানে বসাবেন
+const SUPABASE_KEY = 'আপনার_কপি_করা_publishable_key_এখানে_বসান'; // আপনার আসল কি এখানে দেবেন
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KEY = 'fasttechPremiumData';
-const ADMIN_PASS = '775481'; // আপনার পাসওয়ার্ড
+const ADMIN_PASS = '12345'; // এখানে কোটেশন মার্ক ঠিক করে দেওয়া হয়েছে
 
 const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',logo:'',heroImage:'',coverageLocations:[],packages:[
 {id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য',image:'assets/package-1.svg'},
@@ -13,11 +13,8 @@ const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব
 {id:5,title:'Flash',speed:'100 Mbps',price:'৳1000',desc:'হাই-স্পিড ও ভারী ব্যবহারের জন্য',image:'assets/package-5.svg'}],gallery:[]};
 
 const clone=x=>JSON.parse(JSON.stringify(x));
-
-// গ্লোবাল স্টেট
 let adminDataState = clone(base);
 
-// Supabase থেকে ডেটা লোড করা
 async function loadAdminDataFromSupabase() {
     try {
         const { data, error } = await supabase
@@ -43,7 +40,6 @@ function get(){
     return adminDataState;
 }
 
-// ক্লাউড এবং লোকাল উভয় জায়গাতেই ডেটা সেভ ও সিঙ্ক করার ফাংশন
 async function put(d){
     adminDataState = d;
     localStorage.setItem(KEY, JSON.stringify(d));
@@ -55,8 +51,6 @@ async function put(d){
             
         if (error) {
             console.error('ক্লাউডে সেভ করতে সমস্যা:', error.message);
-        } else {
-            console.log('সফলভাবে ক্লাউডে লাইভ আপডেট হয়েছে!');
         }
     } catch (err) {
         console.error('Supabase error:', err);
@@ -88,7 +82,6 @@ function draw(){
   if(gList) gList.innerHTML=d.gallery.map(g=>`<div class="admin-item">${g.image?`<img class="preview-img" src="${g.image}" alt="">`:''}<b>${esc(g.title)}</b><button type="button" data-del-gallery="${g.id}">মুছুন</button></div>`).join('')||'<p class="muted">গ্যালারিতে এখনো ছবি নেই।</p>';
 }
 
-// Auth Function
 function checkAdminAuth() {
     const isAuth = sessionStorage.getItem('fasttech_auth') === 'true';
     const loginPanel = document.getElementById('adminLoginPanel');
@@ -110,7 +103,6 @@ function checkAdminAuth() {
     }
 }
 
-// Global Login Submit Handler
 document.addEventListener('submit', function(e) {
     if (e.target && e.target.id === 'adminLoginForm') {
         e.preventDefault();
@@ -124,10 +116,9 @@ document.addEventListener('submit', function(e) {
     }
 });
 
-// Main Actions Setup
 function setupActions() {
     const sf=document.getElementById('settingsForm');
-    if(sf) sf.onsubmit=async e=>{e.preventDefault();try{const d=get(),f=e.target;['name','heroText','phone','whatsapp','address','hours'].forEach(k=>d[k]=f.elements[k].value.trim());if(f.logo.files[0])d.logo=await fileData(f.logo.files[0]);if(f.heroImage.files[0])d.heroImage=await fileData(f.heroImage.files[0]);await put(d);f.logo.value='';f.heroImage.value='';draw();alert('তথ্য সফলভাবে ক্লাউডে ও ব্রাউজারে সংরক্ষিত হয়েছে।')}catch(err){alert(err.message)}};
+    if(sf) sf.onsubmit=async e=>{e.preventDefault();try{const d=get(),f=e.target;['name','heroText','phone','whatsapp','address','hours'].forEach(k=>d[k]=f.elements[k].value.trim());if(f.logo.files[0])d.logo=await fileData(f.logo.files[0]);if(f.heroImage.files[0])d.heroImage=await fileData(f.heroImage.files[0]);await put(d);f.logo.value='';f.heroImage.value='';draw();alert('তথ্য সফলভাবে সংরক্ষিত হয়েছে।')}catch(err){alert(err.message)}};
 
     const pf=document.getElementById('packageForm');
     function clearPackage(){if(!pf)return;pf.reset();pf.elements.id.value='';document.getElementById('packageFormTitle').textContent='নতুন প্যাকেজ যোগ করুন';document.getElementById('packageSave').textContent='প্যাকেজ যোগ করুন';document.getElementById('cancelEdit').hidden=true}
@@ -144,4 +135,27 @@ function setupActions() {
     const gf=document.getElementById('galleryForm');
     if(gf) gf.onsubmit=async e=>{e.preventDefault();try{const f=e.target,d=get(),files=[...f.images.files];for(const file of files)d.gallery.push({id:Date.now()+Math.random(),title:files.length>1?`${f.title.value} (${file.name})`:f.title.value,image:await fileData(file)});await put(d);f.reset();draw()}catch(err){alert(err.message)}};
 
-    document.addEventListener
+    document.addEventListener('click',async e=>{
+        const t=e.target,d=get();
+        if(t.dataset.editCoverage){const loc=(d.coverageLocations||[]).find(x=>String(x.id)===String(t.dataset.editCoverage));if(loc&&cf){cf.elements.id.value=loc.id;cf.elements.name.value=loc.name;document.getElementById('coverageSave').textContent='পরিবর্তন সংরক্ষণ';document.getElementById('coverageCancel').hidden=false;cf.scrollIntoView({behavior:'smooth',block:'center'})}}
+        if(t.dataset.delCoverage){if(confirm('এই Coverage Location মুছে ফেলবেন?')){d.coverageLocations=(d.coverageLocations||[]).filter(x=>String(x.id)!==String(t.dataset.delCoverage));await put(d);draw()}}
+        if(t.dataset.editPackage){const p=d.packages.find(x=>x.id==t.dataset.editPackage);if(!p||!pf)return;pf.elements.id.value=p.id;pf.elements.title.value=p.title;pf.elements.speed.value=p.speed;pf.elements.price.value=p.price;pf.elements.desc.value=p.desc;document.getElementById('packageFormTitle').textContent='প্যাকেজ সম্পাদনা করুন';document.getElementById('packageSave').textContent='পরিবর্তন সংরক্ষণ';document.getElementById('cancelEdit').hidden=false;pf.scrollIntoView({behavior:'smooth',block:'center'})}
+        if(t.dataset.delPackage){if(confirm('এই প্যাকেজটি মুছে ফেলবেন?')){d.packages=d.packages.filter(p=>p.id!=t.dataset.delPackage);await put(d);draw()}}
+        if(t.dataset.delGallery){d.gallery=d.gallery.filter(g=>g.id!=t.dataset.delGallery);await put(d);draw()}
+    });
+
+    const backupBtn = document.getElementById('backup');
+    if(backupBtn) backupBtn.onclick=()=>{const b=new Blob([JSON.stringify(get(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='fasttech-network-backup.json';a.click();URL.revokeObjectURL(a.href)};
+
+    const restoreInput = document.getElementById('restore');
+    if(restoreInput) restoreInput.onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d.packages)||!Array.isArray(d.gallery))throw Error();await put({...clone(base),...d});draw();alert('Backup restore হয়েছে।')}catch{alert('সঠিক FastTech JSON backup নির্বাচন করুন।')}e.target.value=''};
+
+    const resetBtn = document.getElementById('reset');
+    if(resetBtn) resetBtn.onclick=async()=>{if(confirm('সব ডেটা রিসেট করবেন?')){await put(clone(base));if(typeof clearPackage==='function')clearPackage();draw()}};
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    checkAdminAuth();
+    setupActions();
+});
+checkAdminAuth();
