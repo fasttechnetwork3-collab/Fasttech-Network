@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um'; // আপনার সঠিক Publishable Key এখানে বসানো হয়েছে
+const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KEY = 'fasttechPremiumData';
@@ -117,22 +117,6 @@ function checkAdminAuth() {
             mainContent.style.display = 'none';
             mainContent.style.setProperty('display', 'none', 'important');
         }
-    }
-}
-
-function initLoginForm() {
-    const loginForm = document.getElementById('adminLoginForm');
-    if (loginForm) {
-        loginForm.onsubmit = function(e) {
-            e.preventDefault();
-            const passInput = document.getElementById('adminPassword');
-            if (passInput && passInput.value === ADMIN_PASS) {
-                sessionStorage.setItem('fasttech_auth', 'true');
-                checkAdminAuth();
-            } else {
-                alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
-            }
-        };
     }
 }
 
@@ -292,23 +276,23 @@ function setupActions() {
             draw();
         }
     };
-	}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     checkAdminAuth();
     setupActions();
 
-    // সরাসরি ফর্ম সাবমিট হ্যান্ডলার যুক্ত করা হলো
     const loginForm = document.getElementById('adminLoginForm');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.onsubmit = function(e) {
             e.preventDefault();
             const passInput = document.getElementById('adminPassword');
             if (passInput && passInput.value === ADMIN_PASS) {
                 sessionStorage.setItem('fasttech_auth', 'true');
-                checkAdminAuth(); // প্যানেল ওপেন করবে এবং ডেটা লোড করবে
+                checkAdminAuth();
             } else {
                 alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
             }
-        });
+        };
     }
 });
