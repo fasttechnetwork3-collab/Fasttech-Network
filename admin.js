@@ -1,9 +1,9 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'আপনার_কপি_করা_publishable_key_এখানে_বসান'; // আপনার আসল কি এখানে দেবেন
+const SUPABASE_KEY = 'sb_publishable_Fk_I6gvQDJCHrgU5bNhRqQ_acBR83um'; // আপনার আসল কি এখানে দেবেন
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KEY = 'fasttechPremiumData';
-const ADMIN_PASS = '12345'; // এখানে কোটেশন মার্ক ঠিক করে দেওয়া হয়েছে
+const ADMIN_PASS = '775481'; // এখানে কোটেশন মার্ক ঠিক করে দেওয়া হয়েছে
 
 const base={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',logo:'',heroImage:'',coverageLocations:[],packages:[
 {id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য',image:'assets/package-1.svg'},
