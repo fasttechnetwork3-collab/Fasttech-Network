@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Fk_I6gvQDJCHrgU5bNhRqQ_acBR83um'; // আপনার পুরো Publishable Key দিন
+const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um'; // আপনার সঠিক Publishable Key এখানে বসানো হয়েছে
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KEY = 'fasttechPremiumData';
