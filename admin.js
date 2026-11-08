@@ -120,22 +120,19 @@ function checkAdminAuth() {
     }
 }
 
+// admin.html-এর onclick হ্যান্ডলার
+function handleLogin() {
+    const passInput = document.getElementById('adminPassword');
+    if (passInput && passInput.value === ADMIN_PASS) {
+        sessionStorage.setItem('fasttech_auth', 'true');
+        checkAdminAuth();
+    } else {
+        alert('ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।');
+    }
+}
+
 function setupActions() {
     const sf = document.getElementById('settingsForm');
     if (sf) sf.onsubmit = async e => {
         e.preventDefault();
         try {
-            const d = get(), f = e.target;
-            ['name','heroText','phone','whatsapp','address','hours'].forEach(k => d[k] = f.elements[k].value.trim());
-            if (f.logo.files[0]) d.logo = await fileData(f.logo.files[0]);
-            if (f.heroImage.files[0]) d.heroImage = await fileData(f.heroImage.files[0]);
-            await put(d);
-            f.logo.value = ''; f.heroImage.value = '';
-            draw();
-            alert('তথ্য সফলভাবে সংরক্ষিত হয়েছে।');
-        } catch (err) { alert(err.message); }
-    };
-
-    const pf = document.getElementById('packageForm');
-    function clearPackage() {
-        if (!
