@@ -1,3 +1,40 @@
+// আপনার সিক্রেট পাসওয়ার্ড (আপনার ইচ্ছেমতো পরিবর্তন করতে পারেন)
+const ADMIN_PASSWORD = "775481"; 
+
+// পেজ লোড হলে চেক করবে আগে লগইন করা আছে কিনা
+document.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("isAdminAuthenticated") === "true") {
+        showAdminPanel();
+    }
+});
+
+// পাসওয়ার্ড যাচাই করার ফংশন
+function checkAdminPassword() {
+    const enteredPass = document.getElementById("adminPassInput").value;
+    if (enteredPass === ADMIN_PASSWORD) {
+        sessionStorage.setItem("isAdminAuthenticated", "true");
+        showAdminPanel();
+    } else {
+        document.getElementById("loginError").style.display = "block";
+    }
+}
+
+// অ্যাডমিন প্যানেল দেখানোর ফংশন
+function showAdminPanel() {
+    const loginSec = document.getElementById("loginSection");
+    const adminCont = document.getElementById("adminContent");
+    if (loginSec) loginSec.style.display = "none";
+    if (adminCont) adminCont.style.display = "block";
+}
+
+// লগআউট ফংশন (প্রয়োজন হলে বাটনে যুক্ত করতে পারেন)
+function logoutAdmin() {
+    sessionStorage.removeItem("isAdminAuthenticated");
+    location.reload();
+}
+
+// -------------------------------------------------------------
+// নিচে আপনার আগের SUPABASE_URL, SUPABASE_KEY এবং dbClient কোড থাকবে...
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qZmVzc2Z6Y3Rldmt3emNmenNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMDU1MDgsImV4cCI6MjEwOTY4MTUwOH0.LAThwMaMDNL3JOUvYkQctCtT9u2FnsaM2vtPWUWtky8';
 
