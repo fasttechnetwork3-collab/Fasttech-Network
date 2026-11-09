@@ -1,7 +1,6 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qZmVzc2Z6Y3Rldmt3emNmenNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMDU1MDgsImV4cCI6MjEwOTY4MTUwOH0.LAThwMaMDNL3JOUvYkQctCtT9u2FnsaM2vtPWUWtky8';
 
-// সঠিক REST API ফেচ ক্লায়েন্ট
 const dbClient = {
     from: (table) => ({
         select: (columns) => ({
@@ -23,28 +22,7 @@ const dbClient = {
                     }
                 }
             })
-        }),
-        upsert: async (payload) => {
-            try {
-                const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'resolution=merge-duplicates'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                if (!res.ok) {
-                    const errText = await res.text();
-                    console.error('Save error details:', errText);
-                    return { error: { message: errText } };
-                }
-                return { error: null };
-            } catch (err) {
-                return { error: err };
-            }
-        }
+        })
     })
 };
 
@@ -57,11 +35,11 @@ const defaults = {
   address: 'আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম',
   hours: 'প্রতিদিন ২৪ ঘণ্টা খোলা',
   packages: [
-    {id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য',image:'assets/package-1.svg'},
-    {id:2,title:'Meghna',speed:'35 Mbps',price:'৳600',desc:'পরিবারের একাধিক ডিভাইসের জন্য',image:'assets/package-2.svg'},
-    {id:3,title:'Jamuna',speed:'40 Mbps',price:'৳700',desc:'স্ট্রিমিং ও অনলাইন কাজের জন্য',image:'assets/package-3.svg'},
-    {id:4,title:'Turbo',speed:'50 Mbps',price:'৳800',desc:'দ্রুতগতির স্মুথ ইন্টারনেট অভিজ্ঞতা',image:'assets/package-4.svg'},
-    {id:5,title:'Flash',speed:'100 Mbps',price:'৳1000',desc:'হাই-স্পিড ও ভারী ব্যবহারের জন্য',image:'assets/package-5.svg'}
+    {id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য'},
+    {id:2,title:'Meghna',speed:'35 Mbps',price:'৳600',desc:'পরিবারের একাধিক ডিভাইসের জন্য'},
+    {id:3,title:'Jamuna',speed:'40 Mbps',price:'৳700',desc:'স্ট্রিমিং ও অনলাইন কাজের জন্য'},
+    {id:4,title:'Turbo',speed:'50 Mbps',price:'৳800',desc:'দ্রুতগতির স্মুথ ইন্টারনেট অভিজ্ঞতা'},
+    {id:5,title:'Flash',speed:'100 Mbps',price:'৳1000',desc:'হাই-স্পিড ও ভারী ব্যবহারের জন্য'}
   ],
   gallery: [],
   coverageLocations: [
@@ -134,14 +112,14 @@ function render(d){
     const contactHours = document.getElementById('contactHours');
     if(contactHours) contactHours.textContent = d.hours;
     
-    // কভারেজ এলাকা রেন্ডার করার নিরাপদ লজিক
+    // কভারেজ এলাকা রেন্ডার করার অংশ
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
         coverageEl.innerHTML = '<ul>' + locations.map(x => `<li>📍 ${esc(x.name)}</li>`).join('') + '</ul>';
     }
     
-    // প্যাকেজ গ্রিড রেন্ডার করার নিরাপদ লজিক
+    // প্যাকেজ গ্রিড রেন্ডার করার অংশ
     const packageGrid = document.getElementById('packageGrid');
     if(packageGrid) {
         const pkgs = (d.packages && d.packages.length > 0) ? d.packages : defaults.packages;
