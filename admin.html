@@ -17,16 +17,15 @@
   </div>
 </header>
 
-<section class="inner-hero">
+<section class="section" style="padding: 40px 0 20px;">
   <div class="wrap">
-    <span class="eyebrow">WEBSITE CONTENT MANAGER</span>
-    <h1>Admin <em>Control Panel</em></h1>
-    <p class="muted">ওয়েবসাইটের লেখা, লোগো, ব্যানার, প্যাকেজ ও ছবি পরিচালনা করুন।</p>
+    <span class="eyebrow">CONTROL CENTER</span>
+    <h1 style="font-size:36px; margin:10px 0;">Admin <em>Dashboard</em></h1>
   </div>
 </section>
 
-<main class="wrap admin-wrap">
-  <div class="warning"><b>ডেমো সংস্করণের সীমাবদ্ধতা:</b> এই সংস্করণে Admin Panel-এর পরিবর্তন একই ব্রাউজারের Local Storage এবং Supabase Cloud-এ একসাথে সিঙ্ক হবে।</div>
+<main class="wrap admin-wrap" style="padding-top:0;">
+  <div class="warning"><b>ক্লাউড সিঙ্ক সক্রিয়:</b> এখান থেকে পরিবর্তন করলে তা সরাসরি Supabase-এ সেভ হবে এবং লাইভ সাইটে আপডেট হয়ে যাবে।</div>
   <div class="admin-grid">
     <section class="panel">
       <h2>ব্র্যান্ড ও ওয়েবসাইট</h2>
@@ -34,14 +33,14 @@
         <label>প্রতিষ্ঠানের নাম<input name="name" required></label>
         <label>হোমপেজের পরিচিতি<textarea name="heroText" rows="3"></textarea></label>
         <label>ফোন নম্বর<input name="phone"></label>
-        <label>WhatsApp নম্বর (দেশের কোডসহ, শুধু সংখ্যা)<input name="whatsapp"></label>
+        <label>WhatsApp নম্বর<input name="whatsapp"></label>
         <label>অফিসের ঠিকানা<input name="address"></label>
         <label>সাপোর্ট সময়<input name="hours"></label>
         <label>লোগো পরিবর্তন<input name="logo" type="file" accept="image/*"></label>
         <label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label>
-        <button class="btn">তথ্য সংরক্ষণ করুন</button>
+        <button class="btn" style="margin-top:15px; width:100%;">তথ্য সংরক্ষণ করুন</button>
       </form>
-      <div class="admin-previews" id="brandPreviews"></div>
+      <div class="admin-previews" id="brandPreviews" style="display:flex; gap:10px; margin-top:15px;"></div>
     </section>
 
     <section class="panel">
@@ -51,10 +50,10 @@
         <label>প্যাকেজের নাম<input name="title" required placeholder="যেমন: Home Plus"></label>
         <label>স্পিড<input name="speed" required placeholder="যেমন: 30 Mbps"></label>
         <label>মাসিক মূল্য<input name="price" required placeholder="যেমন: ৳800"></label>
-        <label>বিবরণ<input name="desc" placeholder="প্যাকেজের সংক্ষিপ্ত বিবরণ"></label>
+        <label>বিবরণ<input name="desc" placeholder="সংক্ষিপ্ত বিবরণ"></label>
         <label>প্যাকেজের ছবি<input name="image" type="file" accept="image/*"></label>
-        <div class="admin-actions">
-          <button class="btn" id="packageSave">প্যাকেজ যোগ করুন</button>
+        <div class="admin-actions" style="display:flex; gap:10px; margin-top:15px;">
+          <button class="btn" id="packageSave" style="flex:1;">প্যাকেজ যোগ করুন</button>
           <button class="danger" type="button" id="cancelEdit" hidden>এডিট বাতিল</button>
         </div>
       </form>
@@ -62,13 +61,13 @@
     </section>
 
     <section class="panel">
-      <h2>Coverage Location Management</h2>
-      <p class="muted">ওয়েবসাইটের Coverage Section-এ দেখানোর জন্য এলাকার নাম যোগ, সম্পাদনা বা মুছে ফেলুন।</p>
+      <h2>Coverage Location</h2>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:15px;">এলাকার নাম যোগ বা বাদ দিন।</p>
       <form id="coverageForm" class="admin-form">
         <input name="id" type="hidden">
-        <label>এলাকার নাম<input name="name" required placeholder="যেমন: Amirabad, Lohagara"></label>
-        <div class="admin-actions">
-          <button class="btn" id="coverageSave">Add Location</button>
+        <label>এলাকার নাম<input name="name" required placeholder="যেমন: Amirabad"></label>
+        <div class="admin-actions" style="display:flex; gap:10px; margin-top:15px;">
+          <button class="btn" id="coverageSave" style="flex:1;">Add Location</button>
           <button class="danger" type="button" id="coverageCancel" hidden>এডিট বাতিল</button>
         </div>
       </form>
@@ -76,21 +75,13 @@
     </section>
 
     <section class="panel">
-      <h2>গ্যালারিতে ছবি যুক্ত করুন</h2>
+      <h2>গ্যালারি ম্যানেজমেন্ট</h2>
       <form id="galleryForm" class="admin-form">
         <label>ছবির শিরোনাম<input name="title" required></label>
-        <label>এক বা একাধিক ছবি নির্বাচন<input name="images" type="file" accept="image/*" multiple required></label>
-        <button class="btn">গ্যালারিতে যোগ করুন</button>
+        <label>ছবি নির্বাচন<input name="images" type="file" accept="image/*" multiple required></label>
+        <button class="btn" style="margin-top:15px; width:100%;">গ্যালারিতে যোগ করুন</button>
       </form>
       <div class="admin-list" id="galleryList"></div>
-    </section>
-
-    <section class="panel">
-      <h2>ডেটা ব্যাকআপ ও রিস্টোর</h2>
-      <p class="muted">আপনার বর্তমান ওয়েবসাইটের তথ্য JSON ফাইলে ডাউনলোড করুন। প্রয়োজনে পরে Restore করতে পারবেন।</p>
-      <button class="btn" id="backup">Backup Download</button>
-      <label class="admin-form">Backup Restore<input id="restore" type="file" accept="application/json"></label>
-      <button class="danger" id="reset">ডেমো ডেটা রিসেট</button>
     </section>
   </div>
 </main>
@@ -98,11 +89,10 @@
 <footer class="footer">
   <div class="wrap footer-bottom">
     <span>FastTech Network Admin</span>
-    <a href="index.html">Home</a>
+    <a href="index.html" style="color:var(--cyan);">Home</a>
   </div>
 </footer>
 
-<!-- Supabase CDN Script -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="admin.js"></script>
 </body>
