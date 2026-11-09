@@ -101,7 +101,23 @@
         <div class="admin-list" id="coverageList"></div>
       </section>
 
-      <!-- ৪. গ্যালারি ম্যানেজমেন্ট -->
+      <!-- ৪. নতুন কাস্টমার ম্যানেজমেন্ট (ডাটাবেজে যুক্ত করার ফর্ম) -->
+      <section class="panel">
+        <h2>নতুন কাস্টমার যুক্ত করুন</h2>
+        <p class="muted">সরাসরি Supabase ডাটাবেজে নতুন গ্রাহকের তথ্য এন্ট্রি করুন।</p>
+        <form id="addCustomerForm" class="admin-form">
+          <label>কাস্টমার আইডি (যেমন: 101)<input type="text" id="newCustId" required placeholder="আইডি লিখুন"></label>
+          <label>মোবাইল নম্বর<input type="text" id="newCustPhone" required placeholder="016XXXXXXXX"></label>
+          <label>কাস্টমারের নাম<input type="text" id="newCustName" required placeholder="পূর্ণ নাম"></label>
+          <label>পাসওয়ার্ডের জন্য নামের শেষের অংশ<input type="text" id="newCustLastName" required placeholder="যেমন: মামুন"></label>
+          <label>প্যাকেজ<input type="text" id="newCustPackage" required placeholder="Flash (100 Mbps)"></label>
+          <label>মাসিক বিল (টাকার পরিমাণ)<input type="text" id="newCustBill" required placeholder="৳1000"></label>
+          <label>ঠিকানা<input type="text" id="newCustAddress" required placeholder="এলাকা বা ঠিকানা"></label>
+          <button class="btn" style="width:100%; margin-top:10px;">ডাটাবেজে কাস্টমার সেভ করুন</button>
+        </form>
+      </section>
+
+      <!-- ৫. গ্যালারি ম্যানেজমেন্ট -->
       <section class="panel">
         <h2>গ্যালারিতে ছবি যুক্ত করুন</h2>
         <form id="galleryForm" class="admin-form">
@@ -112,7 +128,7 @@
         <div class="admin-list" id="galleryList"></div>
       </section>
 
-      <!-- ৫. ডেটা ব্যাকআপ ও রিস্টোর -->
+      <!-- ৬. ডেটা ব্যাকআপ ও রিস্টোর -->
       <section class="panel">
         <h2>ডেটা ব্যাকআপ ও রিস্টোর</h2>
         <p class="muted">আপনার বর্তমান ওয়েবসাইটের তথ্য JSON ফাইলে ডাউনলোড করুন। প্রয়োজনে পরে Restore করতে পারবেন।</p>
@@ -131,5 +147,8 @@
     </div>
   </footer>
 </div>
+
+<!-- আপনার মূল admin.js ফাইলটি এখানে কানেক্ট করা আছে তা নিশ্চিত করুন -->
+<script src="admin.js"></script>
 </body>
 </html>
