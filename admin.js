@@ -1,6 +1,6 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const dbClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 const KEY = 'fasttechPremiumData';
 const base = {
@@ -31,7 +31,8 @@ let adminDataState = clone(base);
 
 async function loadAdminDataFromSupabase() {
     try {
-        const { data, error } = await supabase
+        if (!dbClient) return;
+        const { data, error } = await dbClient
             .from('site_data')
             .select('content')
             .eq('id', 1)
@@ -56,8 +57,10 @@ async function put(d) {
     adminDataState = d;
     localStorage.setItem(KEY, JSON.stringify(d));
     try {
-        const { error } = await supabase.from('site_data').upsert({ id: 1, content: d });
-        if (error) console.error('Supabase save error:', error.message);
+        if (dbClient) {
+            const { error } = await dbClient.from('site_data').upsert({ id: 1, content: d });
+            if (error) console.error('Supabase save error:', error.message);
+        }
     } catch (err) {
         console.error('Supabase sync error:', err);
     }
@@ -79,7 +82,6 @@ function fileData(file) {
 function draw() {
     const d = get();
     
-    // Settings form fill
     const f = document.getElementById('settingsForm');
     if (f) {
         ['name','heroText','phone','whatsapp','address','hours'].forEach(k => {
@@ -97,7 +99,6 @@ function draw() {
         previews.innerHTML = `${d.logo ? `<img class="preview-img" src="${d.logo}" alt="Logo">` : ''}`;
     }
 
-    // Package List Render
     const pList = document.getElementById('packageList');
     if (pList) {
         pList.innerHTML = (d.packages && d.packages.length > 0) 
@@ -115,7 +116,6 @@ function draw() {
             : '<p style="color:var(--muted); margin-top:10px;">এখনো কোনো প্যাকেজ নেই।</p>';
     }
 
-    // Coverage List Render
     const cList = document.getElementById('coverageList');
     if (cList) {
         cList.innerHTML = (d.coverageLocations && d.coverageLocations.length > 0) 
@@ -130,7 +130,6 @@ function draw() {
             : '<p style="color:var(--muted); margin-top:10px;">কোনো কভারেজ এলাকা নেই।</p>';
     }
 
-    // Gallery List Render
     const gList = document.getElementById('galleryList');
     if (gList) {
         gList.innerHTML = (d.gallery && d.gallery.length > 0) 
@@ -146,7 +145,6 @@ function draw() {
 document.addEventListener('DOMContentLoaded', () => {
     loadAdminDataFromSupabase();
 
-    // 1. Settings Form Submit
     const sf = document.getElementById('settingsForm');
     if (sf) {
         sf.onsubmit = async e => {
@@ -168,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // 2. Package Form Submit & Edit
     const pf = document.getElementById('packageForm');
     function clearPackage() {
         if (!pf) return;
@@ -215,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelEditBtn = document.getElementById('cancelEdit');
     if (cancelEditBtn) cancelEditBtn.onclick = clearPackage;
 
-    // 3. Coverage Form Submit & Edit
     const cf = document.getElementById('coverageForm');
     function clearCoverage() {
         if (!cf) return;
@@ -251,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const coverageCancel = document.getElementById('coverageCancel');
     if (coverageCancel) coverageCancel.onclick = clearCoverage;
 
-    // 4. Gallery Form Submit
     const gf = document.getElementById('galleryForm');
     if (gf) {
         gf.onsubmit = async e => {
@@ -271,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // 5. Backup, Restore & Reset Buttons
     const backupBtn = document.getElementById('backup');
     if (backupBtn) {
         backupBtn.onclick = () => {
@@ -316,12 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Global Click Handler for Edit / Delete triggers
     document.addEventListener('click', async e => {
         const t = e.target;
         const d = get();
 
-        // Edit Package
         if (t.dataset.editPackage) {
             const p = d.packages.find(x => x.id == t.dataset.editPackage);
             if (!p || !pf) return;
@@ -337,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: pf.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // Delete Package
         if (t.dataset.delPackage) {
             if (confirm('প্যাকেজটি মুছে ফেলতে চান?')) {
                 d.packages = d.packages.filter(p => p.id != t.dataset.delPackage);
@@ -346,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Edit Coverage
         if (t.dataset.editCoverage) {
             const loc = (d.coverageLocations || []).find(x => String(x.id) === String(t.dataset.editCoverage));
             if (!loc || !cf) return;
@@ -358,7 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: cf.offsetTop - 50, behavior: 'smooth' });
         }
 
-        // Delete Coverage
         if (t.dataset.delCoverage) {
             if (confirm('এলাকাটি মুছে ফেলতে চান?')) {
                 d.coverageLocations = (d.coverageLocations || []).filter(x => String(x.id) !== String(t.dataset.delCoverage));
@@ -367,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Delete Gallery
         if (t.dataset.delGallery) {
             if (confirm('ছবিটি মুছে ফেলতে চান?')) {
                 d.gallery = d.gallery.filter(g => g.id != t.dataset.delGallery);
