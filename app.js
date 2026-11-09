@@ -29,7 +29,7 @@ const dbClient = {
 const KEY = 'fasttechPremiumData';
 const defaults = {
   name: 'FastTech Network',
-  heroText: 'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',
+  heroText: 'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং ২৪/৭ ডেডিকেটেড সাপোর্ট।',
   phone: '+880 1622492004',
   whatsapp: '8801622492004',
   address: 'আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম',
@@ -112,14 +112,14 @@ function render(d){
     const contactHours = document.getElementById('contactHours');
     if(contactHours) contactHours.textContent = d.hours;
     
-    // কভারেজ এলাকা রেন্ডার করার অংশ
+    // কভারেজ এরিয়া রেন্ডার
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
         coverageEl.innerHTML = '<ul>' + locations.map(x => `<li>📍 ${esc(x.name)}</li>`).join('') + '</ul>';
     }
     
-    // প্যাকেজ গ্রিড রেন্ডার করার অংশ
+    // প্যাকেজ গ্রিড রেন্ডার
     const packageGrid = document.getElementById('packageGrid');
     if(packageGrid) {
         const pkgs = (d.packages && d.packages.length > 0) ? d.packages : defaults.packages;
