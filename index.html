@@ -87,6 +87,7 @@
   </div>
 </section>
 
+<!-- কভারেজ সেকশন (গুগল ম্যাপ যুক্ত করা হয়েছে) -->
 <section class="section coverage" id="coverage">
   <div class="wrap coverage-inner">
     <div>
@@ -95,8 +96,16 @@
       <p style="color:var(--muted); margin: 15px 0;">আমাদের ফাইবার অপটিক নেটওয়ার্ক কোথায় কোথায় বিস্তৃত তা নিচে দেখুন:</p>
       <div class="coverage-locations" id="coverageLocations"></div>
     </div>
-    <div class="coverage-map">
-      <div style="position:absolute; inset:0; display:grid; place-items:center; color:var(--cyan); font-weight:800; letter-spacing:3px;">FIBER COVERAGE ZONE</div>
+    <div class="coverage-map" style="position: relative; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); min-height: 350px;">
+      <iframe 
+        id="coverageMapIframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3698.814838612035!2d92.0805!3d22.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDAxJzIxLjAiTiA5MsKwMDQnNDkuOCJF!5e0!3m2!1sen!2sbd!4v1600000000000!5m2!1sen!2sbd" 
+        width="100%" 
+        height="100%" 
+        style="border:0; position: absolute; inset:0;" 
+        allowfullscreen="" 
+        loading="lazy">
+      </iframe>
     </div>
   </div>
 </section>
@@ -113,57 +122,54 @@
   </div>
 </section>
 
+<!-- কন্টাক্ট সেকশন (গ্লাস-বক্স লেআউট) -->
 <section id="contact" class="contact-section">
   <div class="wrap contact-grid">
     
-    <!-- বামপাশের GET IN TOUCH কার্ড বক্স -->
-    <div class="contact-info-card">
+    <!-- বামপাশের GET IN TOUCH গ্লাস-কার্ড বক্স -->
+    <div class="contact-card-box">
       <span class="eyebrow">GET IN TOUCH</span>
-      <h2>কথা বলুন <br><span>আমাদের সঙ্গে।</span></h2>
-      <p class="muted">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
+      <h2 style="color: #fff; margin: 10px 0;">কথা বলুন <br><span style="color: var(--cyan, #38bdf8);">আমাদের সঙ্গে।</span></h2>
+      <p class="muted" style="margin-bottom: 25px;">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
 
-      <div class="contact-details">
+      <div class="contact-details" style="display: flex; flex-direction: column; gap: 20px;">
         <div class="detail-item">
-          <small>PHONE / WHATSAPP</small>
-          <p id="contactPhone">+880 1622492004</p>
+          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">PHONE / WHATSAPP</small>
+          <p id="contactPhone" style="color: #fff; font-weight: 600; margin-top: 3px;">+880 1622492004</p>
         </div>
         
         <div class="detail-item">
-          <small>OFFICE ADDRESS</small>
-          <p id="contactAddress">আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম</p>
+          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">OFFICE ADDRESS</small>
+          <p id="contactAddress" style="color: #fff; font-weight: 600; margin-top: 3px;">আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম</p>
         </div>
         
         <div class="detail-item">
-          <small>SUPPORT HOURS</small>
-          <p id="contactHours">প্রতিদিন ২৪ ঘণ্টা খোলা</p>
+          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">SUPPORT HOURS</small>
+          <p id="contactHours" style="color: #fff; font-weight: 600; margin-top: 3px;">প্রতিদিন ২৪ ঘণ্টা খোলা</p>
         </div>
       </div>
     </div>
 
-    <!-- ডানপাশের "সংযোগের অনুরোধ" ফর্ম (আপনার আগের মতো থাকবে) -->
+    <!-- ডানপাশের "সংযোগের অনুরোধ" ফর্ম -->
     <div class="contact-form-card">
-      <!-- আপনার বর্তমান ফান্ডের ফর্ম কোড -->
+      <h2 style="color:#fff; margin-bottom: 20px;">সংযোগের অনুরোধ</h2>
+      <form id="leadForm" class="contact-form">
+        <label style="color:#94a3b8; font-size:13px;">আপনার নাম
+          <input type="text" name="name" placeholder="আপনার নাম লিখুন" required style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
+        </label>
+        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">মোবাইল নম্বর
+          <input type="tel" name="phone" placeholder="01XXXXXXXXX" required style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
+        </label>
+        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">আপনার এলাকা
+          <input type="text" name="area" placeholder="এলাকার নাম" style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
+        </label>
+        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">বার্তা
+          <textarea name="message" placeholder="আপনার প্রয়োজন লিখুন" rows="3" style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;"></textarea>
+        </label>
+        <button class="btn" type="submit" style="width:100%; margin-top:20px;">WhatsApp-এ পাঠান ↗</button>
+      </form>
     </div>
 
   </div>
 </section>
-</main>
-
-<footer class="footer">
-  <div class="wrap footer-main">
-    <div class="brand">
-      <img src="assets/fasttech-logo.jpg" alt="FastTech Network">
-      <div><span>FASTTECH <small>NETWORK</small></span></div>
-    </div>
-    <p>Fast. Reliable. Connected.</p>
-    <div style="display:flex; gap:20px;"><a href="#packages">Packages</a><a href="#contact">Contact</a></div>
-  </div>
-  <div class="wrap footer-bottom">
-    <span>© <span id="year"></span> FastTech Network. All rights reserved.</span>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
-</body>
-</html>
+</
