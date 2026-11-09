@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const d = getData();
             const f = new FormData(e.target);
             const msg = `নতুন সংযোগের অনুরোধ%0Aনাম: ${encodeURIComponent(f.get('name'))}%0Aমোবাইল: ${encodeURIComponent(f.get('phone'))}%0Aএলাকা: ${encodeURIComponent(f.get('area'))}%0Aবার্তা: ${encodeURIComponent(f.get('message'))}`;
-            const number = (d.whatsapp||'8801622492004').replace(/\D/g,'');
+            const number = (d.whatsapp||'8801622492004').replace(/\D/g,’);
             if(number.length>=10) window.open(`https://wa.me/${number}?text=${msg}`,'_blank');
             else alert('WhatsApp নম্বর সেট করা নেই।');
         });
