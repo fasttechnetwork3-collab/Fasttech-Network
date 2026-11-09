@@ -94,17 +94,19 @@
       <span class="eyebrow">SERVICE AVAILABILITY</span>
       <h2>আপনার এলাকায়<br><em>FastTech আছে তো?</em></h2>
       <p style="color:var(--muted); margin: 15px 0;">আমাদের ফাইবার অপটিক নেটওয়ার্ক কোথায় কোথায় বিস্তৃত তা নিচে দেখুন:</p>
+      
+      <!-- এটি নিশ্চিত করুন যে এই আইডিটি আছে, যাতে জেমিন বা জাভাস্ক্রিপ্ট থেকে এলাকার নামগুলো এখানে বসে -->
       <div class="coverage-locations" id="coverageLocations"></div>
     </div>
     
-    <!-- গুগল ম্যাপ বা কভারেজ বক্স -->
-    <div class="coverage-map" style="position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--panel-border);">
+    <!-- গুগল ম্যাপ বক্স -->
+    <div class="coverage-map" style="position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--panel-border); min-height: 350px;">
       <iframe 
         id="coverageMapIframe"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3698.814838612035!2d92.0805!3d22.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDAxJzIxLjAiTiA5MsKwMDQnNDkuOCJF!5e0!3m2!1sen!2sbd!4v1600000000000!5m2!1sen!2sbd" 
         width="100%" 
         height="100%" 
-        style="border:0; position: absolute; inset:0; width:100%; height:100%;" 
+        style="border:0; position: absolute; inset:0;" 
         allowfullscreen="" 
         loading="lazy">
       </iframe>
