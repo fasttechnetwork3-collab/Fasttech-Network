@@ -135,5 +135,35 @@
 <!-- Supabase CDN & JS File -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="admin.js"></script>
+  <!-- নতুন কাস্টমার যুক্ত করার সেকশন -->
+<div class="contact-card-box" style="margin-top: 30px;">
+    <span class="eyebrow">CUSTOMER MANAGEMENT</span>
+    <h3 style="margin: 15px 0 20px; font-family:'Plus Jakarta Sans';">নতুন কাস্টমার যুক্ত করুন</h3>
+    
+    <form id="addCustomerForm" class="admin-form">
+        <label>কাস্টমার আইডি (যেমন: 101)
+            <input type="text" id="newCustId" required placeholder="আইডি লিখুন">
+        </label>
+        <label>মোবাইল নম্বর
+            <input type="text" id="newCustPhone" required placeholder="016XXXXXXXX">
+        </label>
+        <label>কাস্টমারের নাম
+            <input type="text" id="newCustName" required placeholder="পূর্ণ নাম">
+        </label>
+        <label>পাসওয়ার্ডের জন্য নামের শেষের অংশ (যেমন: মামুন)
+            <input type="text" id="newCustLastName" required placeholder="নামের শেষ অংশ">
+        </label>
+        <label>প্যাকেজ
+            <input type="text" id="newCustPackage" required placeholder="Flash (100 Mbps)">
+        </label>
+        <label>মাসিক বিল (টাকার পরিমাণ)
+            <input type="text" id="newCustBill" required placeholder="৳1000">
+        </label>
+        <label>ঠিকানা
+            <input type="text" id="newCustAddress" required placeholder="এলাকা বা ঠিকানা">
+        </label>
+        <button type="submit" class="btn" style="width:100%; margin-top:10px;">ডাটাবেজে কাস্টমার সেভ করুন <b>→</b></button>
+    </form>
+</div>
 </body>
 </html>
