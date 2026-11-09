@@ -1,4 +1,3 @@
-// আপনার সিক্রেট পাসওয়ার্ড
 const ADMIN_PASSWORD = "775481"; 
 
 // পেজ লোড হলে চেক করবে আগে লগইন করা আছে কিনা
@@ -9,15 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
     loadAdminDataFromSupabase();
 });
 
-// পাসওয়ার্ড যাচাই করার ফংশন
-function checkAdminPassword() {
-    const enteredPass = document.getElementById("adminPassInput").value;
+// পাসওয়ার্ড যাচাই করার ফংশন (HTML এর onsubmit="checkAdminPassword(event)" এর জন্য)
+function checkAdminPassword(e) {
+    if (e) e.preventDefault();
+    const inputField = document.getElementById("adminPassInput");
+    if (!inputField) return;
+    
+    const enteredPass = inputField.value.trim();
     if (enteredPass === ADMIN_PASSWORD) {
         sessionStorage.setItem("isAdminAuthenticated", "true");
         showAdminPanel();
     } else {
         const errEl = document.getElementById("loginError");
-        if(errEl) errEl.style.display = "block";
+        if (errEl) errEl.style.display = "block";
     }
 }
 
