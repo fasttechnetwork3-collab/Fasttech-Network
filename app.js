@@ -1,100 +1,16 @@
-const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const KEY = 'fasttechPremiumData';
-
-// ডিফল্ট বেস ডেটা (নাম এবং প্যাকেজ সম্পূর্ণ সেট করা)
-const base = {
-  name: 'FastTech Network',
-  heroText: 'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',
-  phone: '+880 1622492004',
-  whatsapp: '8801622492004',
-  address: 'আপনার অফিসের ঠিকানা যুক্ত করুন',
-  hours: 'প্রতিদিন — সময় নিশ্চিত করুন',
-  logo: '',
-  heroImage: '',
-  coverageLocations: [
-    {id: 1, name: 'Amirabad'},
-    {id: 2, name: 'Lohagara'}
-  ],
-  packages: [
-    {id:1, title:'Padma Pluse', speed:'25 Mbps', price:'৳525', desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য', image:'assets/package-1.svg'},
-    {id:2, title:'Meghna', speed:'35 Mbps', price:'৳600', desc:'পরিবারের একাধিক ডিভাইসের জন্য', image:'assets/package-2.svg'},
-    {id:3, title:'Jamuna', speed:'40 Mbps', price:'৳700', desc:'স্ট্রিমিং ও অনলাইন কাজের জন্য', image:'assets/package-3.svg'},
-    {id:4, title:'Turbo', speed:'50 Mbps', price:'৳800', desc:'দ্রুতগতির স্মুথ ইন্টারনেট অভিজ্ঞতা', image:'assets/package-4.svg'},
-    {id:5, title:'Flash', speed:'100 Mbps', price:'৳1000', desc:'হাই-স্পিড ও ভারী ব্যবহারের জন্য', image:'assets/package-5.svg'}
-  ],
-  gallery: []
-};
-
-const clone = x => JSON.parse(JSON.stringify(x));
-
-async function loadSiteData() {
-    let siteData = clone(base);
-    try {
-        const { data, error } = await supabase
-            .from('site_data')
-            .select('content')
-            .eq('id', 1)
-            .single();
-        
-        if (!error && data && data.content) {
-            siteData = { 
-                ...clone(base), 
-                ...data.content,
-                name: data.content.name || base.name,
-                packages: (data.content.packages && data.content.packages.length > 0) ? data.content.packages : clone(base.packages),
-                coverageLocations: (data.content.coverageLocations && data.content.coverageLocations.length > 0) ? data.content.coverageLocations : clone(base.coverageLocations)
-            };
-        } else {
-            const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
-            siteData = { ...clone(base), ...saved };
-        }
-    } catch (e) {
-        const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
-        siteData = { ...clone(base), ...saved };
-    }
-    
-    renderWebsite(siteData);
-}
-
-function renderWebsite(d) {
-    // প্রতিষ্ঠানের নাম সঠিকভাবে রেন্ডার করা
-    const nameEls = document.querySelectorAll('#siteName, .brand-name');
-    nameEls.forEach(el => { if(el) el.textContent = d.name || 'FastTech Network'; });
-
-    const heroTextEl = document.getElementById('heroText');
-    if (heroTextEl) heroTextEl.textContent = d.heroText;
-
-    const logoEls = document.querySelectorAll('#siteLogo, .site-logo');
-    logoEls.forEach(el => {
-        if(el) el.src = d.logo || 'assets/fasttech-logo.jpg';
-    });
-
-    // সঠিক আইডি 'packageGrid'-এ প্যাকেজ লিস্ট রেন্ডার করা
-    const packageContainer = document.getElementById('packageGrid');
-    if (packageContainer) {
-        packageContainer.innerHTML = d.packages.map(p => `
-            <div class="package-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 25px; text-align: center; position: relative;">
-                <div class="package-price-badge" style="font-size: 24px; font-weight: bold; color: #38bdf8; margin-bottom: 10px;">${p.price}<span style="font-size: 14px; color: #94a3b8;">/month</span></div>
-                <h3 style="font-size: 20px; margin-bottom: 8px; color: #fff;">${p.title}</h3>
-                <div class="package-speed" style="color: #38bdf8; font-weight: 600; margin-bottom: 12px;">⚡ ${p.speed}</div>
-                <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">${p.desc || 'আপনার প্রয়োজন অনুযায়ী ইন্টারনেট প্যাকেজ।'}</p>
-                <div class="package-features" style="font-size: 13px; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); pt: 15px;">✓ YouTube ✓ Facebook ✓ BDIX</div>
-            </div>
-        `).join('');
-    }
-
-    // কভারেজ লোকেশন রেন্ডার
-    const coverageContainer = document.getElementById('publicCoverageList');
-    if (coverageContainer) {
-        coverageContainer.innerHTML = (d.coverageLocations || []).map(loc => `
-            <div class="coverage-badge" style="background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin: 5px; display: inline-block;">📍 ${loc.name}</div>
-        `).join('') || '<p>শীঘ্রই আরও এলাকায় কভারেজ আসছে।</p>';
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadSiteData();
-});
+const KEY='fasttechPremiumData';
+const defaults={name:'FastTech Network',heroText:'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।',phone:'+880 1XXXXXXXXX',whatsapp:'8801XXXXXXXXX',address:'আপনার অফিসের ঠিকানা যুক্ত করুন',hours:'প্রতিদিন — সময় নিশ্চিত করুন',packages:[
+{id:1,title:'Padma Pluse',speed:'25 Mbps',price:'৳525',desc:'দৈনন্দিন ব্রাউজিং ও অনলাইন ব্যবহারের জন্য',image:'assets/package-1.svg'},
+{id:2,title:'Meghna',speed:'35 Mbps',price:'৳600',desc:'পরিবারের একাধিক ডিভাইসের জন্য',image:'assets/package-2.svg'},
+{id:3,title:'Jamuna',speed:'40 Mbps',price:'৳700',desc:'স্ট্রিমিং ও অনলাইন কাজের জন্য',image:'assets/package-3.svg'},
+{id:4,title:'Turbo',speed:'50 Mbps',price:'৳800',desc:'দ্রুতগতির স্মুথ ইন্টারনেট অভিজ্ঞতা',image:'assets/package-4.svg'},
+{id:5,title:'Flash',speed:'100 Mbps',price:'৳1000',desc:'হাই-স্পিড ও ভারী ব্যবহারের জন্য',image:'assets/package-5.svg'}],gallery:[],coverageLocations:[]}
+function getData(){try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');const oldNames=['Home Starter','Home Plus','Business Pro'];if(Array.isArray(saved.packages)&&saved.packages.some(p=>oldNames.includes(p.title))){saved.packages=defaults.packages;}return {...defaults,...saved}}catch(e){return {...defaults}}}
+function saveData(d){localStorage.setItem(KEY,JSON.stringify(d))}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){const d=getData();document.getElementById('heroText').textContent=d.heroText;document.querySelectorAll('.brand img').forEach(img=>{if(d.logo)img.src=d.logo});document.querySelectorAll('.brand span').forEach(el=>{el.innerHTML=esc(d.name||'FastTech Network')+' <small>NETWORK</small>'});if(d.heroImage){const hero=document.querySelector('.hero');hero.style.backgroundImage='linear-gradient(90deg,#080f1cf2,#081426bb),url('+JSON.stringify(d.heroImage)+')';hero.style.backgroundSize='cover';hero.style.backgroundPosition='center'}document.getElementById('topPhone').textContent=d.phone;document.getElementById('topPhone').href='tel:'+d.phone.replace(/[^+\d]/g,'');document.getElementById('contactPhone').textContent=d.phone;document.getElementById('phoneLink').href='tel:'+d.phone.replace(/[^+\d]/g,'');document.getElementById('contactAddress').textContent=d.address;document.getElementById('contactHours').textContent=d.hours;
+ const coverageEl=document.getElementById('coverageLocations');if(coverageEl){const locations=d.coverageLocations||[];coverageEl.innerHTML=locations.length?'<ul>'+locations.map(x=>`<li>📍 ${esc(x.name)}</li>`).join('')+'</ul>':'<p class="coverage-empty">বর্তমানে কভারেজ এলাকার তালিকা আপডেট করা হচ্ছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>';}
+ document.getElementById('packageGrid').innerHTML=d.packages.map((p,i)=>`<article class="package-card"><div class="package-body"><div class="package-price-circle"><strong>${esc(p.price)}</strong><small>/month</small></div><h3>${esc(p.title)}</h3><div class="package-speed-strip"><span class="speed-icon">⚡</span><strong>${esc(String(p.speed).replace(/\s*Mbps/i,''))}</strong><small>Mbps</small></div><p>${esc(p.desc||'আপনার প্রয়োজন অনুযায়ী ইন্টারনেট প্যাকেজ।')}</p><ul class="package-benefits"><li>✓ YouTube</li><li>✓ Facebook</li><li>✓ BDIX</li></ul><a class="btn package-cta" href="#contact">Subscribe Now <b>→</b></a></div></article>`).join('');
+ const samples=['Network installation','Fiber optic connectivity','FastTech team'];document.getElementById('galleryGrid').innerHTML=(d.gallery.length?d.gallery: samples.map((x,i)=>({title:x,image:'',sample:i}))).map((g,i)=>`<div class="gallery-item">${g.image?`<img src="${g.image}" alt="${esc(g.title)}">`:''}<span>${esc(g.title)}</span></div>`).join('');document.getElementById('year').textContent=new Date().getFullYear();}
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mainNav').classList.toggle('open'));
+document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const d=getData(),f=new FormData(e.target);const msg=`নতুন সংযোগের অনুরোধ%0Aনাম: ${encodeURIComponent(f.get('name'))}%0Aমোবাইল: ${encodeURIComponent(f.get('phone'))}%0Aএলাকা: ${encodeURIComponent(f.get('area'))}%0Aবার্তা: ${encodeURIComponent(f.get('message'))}`;const number=(d.whatsapp||'').replace(/\D/g,'');if(number.length>=10)window.open(`https://wa.me/${number}?text=${msg}`,'_blank');else alert('WhatsApp নম্বর Admin Panel থেকে সেট করুন।');});render();
