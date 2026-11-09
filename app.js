@@ -29,7 +29,7 @@ const dbClient = {
 const KEY = 'fasttechPremiumData';
 const defaults = {
   name: 'FastTech Network',
-  heroText: 'বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং ২৪/৭ ডেডিকেটেড সাপোর্ট।',
+  heroText: 'হাই-স্পিড ফাইবার ইন্টারনেট ও নিরবচ্ছিন্ন ২৪/৭ ডিজিটাল সংযোগ',
   phone: '+880 1622492004',
   whatsapp: '8801622492004',
   address: 'আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম',
@@ -94,8 +94,14 @@ function render(d){
     const heroText = document.getElementById('heroText');
     if(heroText) heroText.textContent = d.heroText;
 
-    document.querySelectorAll('.brand img').forEach(img=>{if(d.logo)img.src=d.logo});
-    document.querySelectorAll('.brand span').forEach(el=>{el.innerHTML=esc(d.name||'FastTech Network')+' <small>NETWORK</small>'});
+    document.querySelectorAll('.brand img').forEach(img => {
+        if(d.logo) img.src = d.logo;
+    });
+    
+    // এখানে ডুপ্লিকেট NETWORK বাদ দিয়ে শুধু নাম রেন্ডার ফিক্স করা হলো
+    document.querySelectorAll('.brand span').forEach(el => {
+        el.innerHTML = esc(d.name || 'FastTech Network');
+    });
     
     const topPhone = document.getElementById('topPhone');
     if(topPhone) {
@@ -112,7 +118,7 @@ function render(d){
     const contactHours = document.getElementById('contactHours');
     if(contactHours) contactHours.textContent = d.hours;
     
-    // কভারেজ এরিয়া রেন্ডার
+    // কভারেজ এলাকা রেন্ডার
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
@@ -159,18 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const menuBtn = document.getElementById('menuBtn');
     if(menuBtn) {
-        menuBtn.addEventListener('click',()=>document.getElementById('mainNav').classList.toggle('open'));
+        menuBtn.addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
     }
 
     const contactForm = document.getElementById('contactForm');
     if(contactForm) {
-        contactForm.addEventListener('submit',e=>{
+        contactForm.addEventListener('submit', e => {
             e.preventDefault();
             const d = getData();
             const f = new FormData(e.target);
             const msg = `নতুন সংযোগের অনুরোধ%0Aনাম: ${encodeURIComponent(f.get('name'))}%0Aমোবাইল: ${encodeURIComponent(f.get('phone'))}%0Aএলাকা: ${encodeURIComponent(f.get('area'))}%0Aবার্তা: ${encodeURIComponent(f.get('message'))}`;
-            const number = (d.whatsapp||'8801622492004').replace(/\D/g,'');
-            if(number.length>=10) window.open(`https://wa.me/${number}?text=${msg}`,'_blank');
+            const number = (d.whatsapp || '8801622492004').replace(/\D/g, '');
+            if(number.length >= 10) window.open(`https://wa.me/${number}?text=${msg}`, '_blank');
             else alert('WhatsApp নম্বর সেট করা নেই।');
         });
     }
