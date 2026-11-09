@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal | FastTech Network</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .portal-container { max-width: 800px; margin: 60px auto; padding: 20px; }
+        .login-box, .dashboard-box { background: rgba(10, 20, 38, 0.8); border: 1px solid var(--panel-border); padding: 40px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(15px); }
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
+        .info-card { background: rgba(3, 7, 18, 0.6); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; }
+        .info-card small { color: var(--muted); display: block; margin-bottom: 5px; }
+        .info-card span { font-size: 18px; font-weight: 700; color: #fff; }
+        @media(max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="wrap nav">
+            <a href="index.html" class="brand">
+                <img src="assets/logo.png" alt="FastTech" onerror="this.style.display='none'">
+                <div>
+                    <span>FastTech Network</span>
+                </div>
+            </a>
+            <a href="index.html" class="btn btn-small btn-ghost">← হোম পেজে ফিরে যান</a>
+        </div>
+    </header>
+
+    <div class="portal-container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-box">
+            <span class="eyebrow">CUSTOMER PORTAL</span>
+            <h2 style="margin: 15px 0 25px; font-family:'Plus Jakarta Sans'; font-size: 26px;">আপনার কাস্টমার আইডি বা মোবাইল নম্বর দিয়ে লগইন করুন</h2>
+            <form id="customerLoginForm" style="display:grid; gap:20px;">
+                <label style="color:var(--muted); display:grid; gap:8px;">কাস্টমার আইডি বা মোবাইল নম্বর
+                    <input type="text" id="custIdentity" required placeholder="উদাহরণ: 01622492004 বা CUST-101" style="width:100%; background:#030712; border:1px solid var(--panel-border); color:#fff; padding:14px; border-radius:12px; outline:none;">
+                </label>
+                <button type="submit" class="btn" style="width:100%;">লগইন করুন <b>→</b></button>
+            </form>
+        </div>
+
+        <!-- Dashboard Section (Hidden by default until login) -->
+        <div id="dashboardSection" class="dashboard-box" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:20px; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
+                <div>
+                    <span class="eyebrow">WELCOME BACK</span>
+                    <h2 id="cName" style="margin:5px 0 0; font-family:'Plus Jakarta Sans';">কাস্টমার নাম</h2>
+                </div>
+                <button onclick="logoutCustomer()" class="btn btn-small btn-ghost" style="color:#ef4444; border-color:rgba(239,68,68,0.3);">লগআউট</button>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <small>কাস্টমার আইডি</small>
+                    <span id="cId">-</span>
+                </div>
+                <div class="info-card">
+                    <small>চলমান প্যাকেজ</small>
+                    <span id="cPackage" style="color:var(--cyan);">-</span>
+                </div>
+                <div class="info-card">
+                    <small>মাসিক বিল</small>
+                    <span id="cBill">-</span>
+                </div>
+                <div class="info-card">
+                    <small>সংযোগের ঠিকানা</small>
+                    <span id="cAddress">-</span>
+                </div>
+                <div class="info-card">
+                    <small>মোবাইল নম্বর</small>
+                    <span id="cPhone">-</span>
+                </div>
+                <div class="info-card">
+                    <small>স্ট্যাটাস (Status)</small>
+                    <span id="cStatus" style="color:#10b981;">সক্রিয় (Active)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ডেমো কাস্টমার ডেটা (পরে ইচ্ছেমতো পরিবর্তন বা অ্যাডমিন প্যানেল থেকে কানেক্ট করা যাবে)
+        const sampleCustomers = [
+            { id: "101", phone: "01622492004", name: "আব্দুল্লাহ আল মামুন", package: "Flash (100 Mbps)", bill: "৳1000", address: "আমিরাবাদ, লোহাগাড়া" },
+            { id: "102", phone: "01811111111", name: "মোহাম্মদ জাবের", package: "Turbo (50 Mbps)", bill: "৳800", address: "লোহাগাড়া সদর" }
+        ];
+
+        document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const val = document.getElementById('custIdentity').value.trim();
+            
+            const customer = sampleCustomers.find(c => c.id === val || c.phone === val);
+
+            if(customer) {
+                document.getElementById('cName').textContent = customer.name;
+                document.getElementById('cId').textContent = customer.id;
+                document.getElementById('cPackage').textContent = customer.package;
+                document.getElementById('cBill').textContent = customer.bill;
+                document.getElementById('cAddress').textContent = customer.address;
+                document.getElementById('cPhone').textContent = customer.phone;
+
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+            } else {
+                alert('দুঃখিত, এই আইডি বা মোবাইল নম্বর দিয়ে কোনো কাস্টমার পাওয়া যায়নি।');
+            }
+        });
+
+        function logoutCustomer() {
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('custIdentity').value = '';
+        }
+    </script>
+</body>
+</html>
