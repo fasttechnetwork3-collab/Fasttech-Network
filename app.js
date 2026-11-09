@@ -98,7 +98,6 @@ function render(d){
         if(d.logo) img.src = d.logo;
     });
     
-    // এখানে ডুপ্লিকেট NETWORK বাদ দিয়ে শুধু নাম রেন্ডার ফিক্স করা হলো
     document.querySelectorAll('.brand span').forEach(el => {
         el.innerHTML = esc(d.name || 'FastTech Network');
     });
@@ -118,14 +117,12 @@ function render(d){
     const contactHours = document.getElementById('contactHours');
     if(contactHours) contactHours.textContent = d.hours;
     
-    // কভারেজ এলাকা রেন্ডার
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
         coverageEl.innerHTML = '<ul>' + locations.map(x => `<li>📍 ${esc(x.name)}</li>`).join('') + '</ul>';
     }
     
-    // প্যাকেজ গ্রিড রেন্ডার
     const packageGrid = document.getElementById('packageGrid');
     if(packageGrid) {
         const pkgs = (d.packages && d.packages.length > 0) ? d.packages : defaults.packages;
