@@ -1,10 +1,12 @@
-// আপনার সিক্রেট পাসওয়ার্ড (আপনার ইচ্ছেমতো পরিবর্তন করতে পারেন)
+// আপনার সিক্রেট পাসওয়ার্ড
 const ADMIN_PASSWORD = "775481"; 
+
 // পেজ লোড হলে চেক করবে আগে লগইন করা আছে কিনা
 document.addEventListener("DOMContentLoaded", () => {
     if (sessionStorage.getItem("isAdminAuthenticated") === "true") {
         showAdminPanel();
     }
+    loadAdminDataFromSupabase();
 });
 
 // পাসওয়ার্ড যাচাই করার ফংশন
@@ -14,7 +16,8 @@ function checkAdminPassword() {
         sessionStorage.setItem("isAdminAuthenticated", "true");
         showAdminPanel();
     } else {
-        document.getElementById("loginError").style.display = "block";
+        const errEl = document.getElementById("loginError");
+        if(errEl) errEl.style.display = "block";
     }
 }
 
@@ -26,18 +29,18 @@ function showAdminPanel() {
     if (adminCont) adminCont.style.display = "block";
 }
 
-// লগআউট ফংশন (প্রয়োজন হলে বাটনে যুক্ত করতে পারেন)
+// লগআউট ফংশন
 function logoutAdmin() {
     sessionStorage.removeItem("isAdminAuthenticated");
     location.reload();
 }
 
 // -------------------------------------------------------------
-// নিচে আপনার আগের SUPABASE_URL, SUPABASE_KEY এবং dbClient কোড থাকবে...
+// SUPABASE কনফিগারেশন এবং ক্লায়েন্ট
+// -------------------------------------------------------------
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qZmVzc2Z6Y3Rldmt3emNmenNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMDU1MDgsImV4cCI6MjEwOTY4MTUwOH0.LAThwMaMDNL3JOUvYkQctCtT9u2FnsaM2vtPWUWtky8';
 
-// সঠিক REST API ফেচ ক্লায়েন্ট (নতুন sb_publishable কী-এর জন্য প্রস্তুতকৃত)
 const dbClient = {
     from: (table) => ({
         select: (columns) => ({
@@ -83,6 +86,7 @@ const dbClient = {
         }
     })
 };
+
 const KEY = 'fasttechPremiumData';
 const base = {
   name: 'FastTech Network',
@@ -224,8 +228,6 @@ function draw() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadAdminDataFromSupabase();
-
     const sf = document.getElementById('settingsForm');
     if (sf) {
         sf.onsubmit = async e => {
@@ -252,8 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!pf) return;
         pf.reset();
         pf.elements.id.value = '';
-        document.getElementById('packageFormTitle').textContent = 'নতুন প্যাকেজ যোগ করুন';
-        document.getElementById('packageSave').textContent = 'প্যাকেজ যোগ করুন';
+        const pTitle = document.getElementById('packageFormTitle');
+        if(pTitle) pTitle.textContent = 'নতুন প্যাকেজ যোগ করুন';
+        const pSave = document.getElementById('packageSave');
+        if(pSave) pSave.textContent = 'প্যাকেজ যোগ করুন';
         const cancelBtn = document.getElementById('cancelEdit');
         if (cancelBtn) cancelBtn.hidden = true;
     }
@@ -298,7 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cf) return;
         cf.reset();
         cf.elements.id.value = '';
-        document.getElementById('coverageSave').textContent = 'Add Location';
+        const cSave = document.getElementById('coverageSave');
+        if(cSave) cSave.textContent = 'Add Location';
         const cancelBtn = document.getElementById('coverageCancel');
         if (cancelBtn) cancelBtn.hidden = true;
     }
@@ -344,6 +349,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw();
                 alert('গ্যালারিতে ছবি সফলভাবে যুক্ত হয়েছে!');
             } catch (err) { alert(err.message); }
+        };
+    }
+
+    // -------------------------------------------------------------
+    // নতুন কাস্টমার ডাটাবেজে যুক্ত করার ফর্ম সাবমিট লজিক
+    // -------------------------------------------------------------
+    const addCustomerForm = document.getElementById('addCustomerForm');
+    if (addCustomerForm) {
+        addCustomerForm.onsubmit = async function(e) {
+            e.preventDefault();
+
+            const newCustomer = {
+                id: document.getElementById('newCustId').value.trim(),
+                phone: document.getElementById('newCustPhone').value.trim(),
+                name: document.getElementById('newCustName').value.trim(),
+                last_name: document.getElementById('newCustLastName').value.trim().toLowerCase(),
+                package: document.getElementById('newCustPackage').value.trim(),
+                bill: document.getElementById('newCustBill').value.trim(),
+                address: document.getElementById('newCustAddress').value.trim(),
+                status: "Active"
+            };
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(newCustomer)
+                });
+
+                if (response.ok) {
+                    alert('সফলভাবে নতুন কাস্টমার ডাটাবেজে যুক্ত করা হয়েছে!');
+                    addCustomerForm.reset();
+                } else {
+                    const errData = await response.json();
+                    alert('সংরক্ষণ করতে সমস্যা হয়েছে: এই আইডি বা মোবাইল নম্বর ইতিমধ্যে থাকতে পারে।');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('সার্ভারে সংযোগ স্থাপন করা সম্ভব হয়নি।');
+            }
         };
     }
 
@@ -403,8 +453,10 @@ document.addEventListener('DOMContentLoaded', () => {
             pf.elements.speed.value = p.speed;
             pf.elements.price.value = p.price;
             pf.elements.desc.value = p.desc || '';
-            document.getElementById('packageFormTitle').textContent = 'প্যাকেজ সম্পাদনা করুন';
-            document.getElementById('packageSave').textContent = 'পরিবর্তন সংরক্ষণ';
+            const pTitle = document.getElementById('packageFormTitle');
+            if(pTitle) pTitle.textContent = 'প্যাকেজ সম্পাদনা করুন';
+            const pSave = document.getElementById('packageSave');
+            if(pSave) pSave.textContent = 'পরিবর্তন সংরক্ষণ';
             const cancelBtn = document.getElementById('cancelEdit');
             if (cancelBtn) cancelBtn.hidden = false;
             window.scrollTo({ top: pf.offsetTop - 50, behavior: 'smooth' });
@@ -412,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (t.dataset.delPackage) {
             if (confirm('প্যাকেজটি মুছে ফেলতে চান?')) {
-                d.packages = d.packages.filter(p => p.id != t.dataset.delPackage);
+                d.packages = d.packages.packages.filter(p => p.id != t.dataset.delPackage); // নিরাপদ ফিল্টারিং
                 await put(d);
                 draw();
             }
@@ -423,7 +475,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!loc || !cf) return;
             cf.elements.id.value = loc.id;
             cf.elements.name.value = loc.name;
-            document.getElementById('coverageSave').textContent = 'Update Location';
+            const cSave = document.getElementById('coverageSave');
+            if(cSave) cSave.textContent = 'Update Location';
             const cancelBtn = document.getElementById('coverageCancel');
             if (cancelBtn) cancelBtn.hidden = false;
             window.scrollTo({ top: cf.offsetTop - 50, behavior: 'smooth' });
