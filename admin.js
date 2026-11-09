@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qZmVzc2Z6Y3Rldmt3emNmenNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMDU1MDgsImV4cCI6MjEwOTY4MTUwOH0.LAThwMaMDNL3JOUvYkQctCtT9u2FnsaM2vtPWUWtky8';
 
 // সঠিক REST API ফেচ ক্লায়েন্ট (নতুন sb_publishable কী-এর জন্য প্রস্তুতকৃত)
 const dbClient = {
