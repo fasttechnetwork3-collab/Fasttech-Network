@@ -472,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw();
             }
             }
-        }
 
         if (t.dataset.editCoverage) {
             const loc = (d.coverageLocations || []).find(x => String(x.id) === String(t.dataset.editCoverage));
