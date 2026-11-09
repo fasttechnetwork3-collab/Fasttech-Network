@@ -447,3 +447,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+document.getElementById('addCustomerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const newCustomer = {
+        id: document.getElementById('newCustId').value.trim(),
+        phone: document.getElementById('newCustPhone').value.trim(),
+        name: document.getElementById('newCustName').value.trim(),
+        last_name: document.getElementById('newCustLastName').value.trim().toLowerCase(),
+        package: document.getElementById('newCustPackage').value.trim(),
+        bill: document.getElementById('newCustBill').value.trim(),
+        address: document.getElementById('newCustAddress').value.trim(),
+        status: "Active"
+    };
+
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(newCustomer)
+        });
+
+        if (response.ok) {
+            alert('সফলভাবে নতুন কাস্টমার ডাটাবেজে যুক্ত করা হয়েছে!');
+            document.getElementById('addCustomerForm').reset();
+        } else {
+            const errData = await response.json();
+            alert('সংরক্ষণ করতে সমস্যা হয়েছে: ' + (errData.message || 'দয়া করে আবার চেষ্টা করুন।'));
+        }
+    } catch (err) {
+        console.error(err);
+        alert('সার্ভারে সংযোগ স্থাপন করা সম্ভব হয়নি।');
+    }
+});
