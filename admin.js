@@ -467,9 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (t.dataset.delPackage) {
             if (confirm('প্যাকেজটি মুছে ফেলতে চান?')) {
-                d.packages = d.packages.packages.filter(p => p.id != t.dataset.delPackage); // নিরাপদ ফিল্টারিং
+                d.packages = d.packages.filter(p => p.id != t.dataset.delPackage);
                 await put(d);
                 draw();
+            }
             }
         }
 
