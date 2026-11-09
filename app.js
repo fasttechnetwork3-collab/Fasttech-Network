@@ -134,14 +134,14 @@ function render(d){
     const contactHours = document.getElementById('contactHours');
     if(contactHours) contactHours.textContent = d.hours;
     
-    // কভারেজ এলাকা রেন্ডার করার অংশ
+    // কভারেজ এলাকা রেন্ডার করার নিরাপদ লজিক
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
         coverageEl.innerHTML = '<ul>' + locations.map(x => `<li>📍 ${esc(x.name)}</li>`).join('') + '</ul>';
     }
     
-    // প্যাকেজ গ্রিড রেন্ডার করার অংশ
+    // প্যাকেজ গ্রিড রেন্ডার করার নিরাপদ লজিক
     const packageGrid = document.getElementById('packageGrid');
     if(packageGrid) {
         const pkgs = (d.packages && d.packages.length > 0) ? d.packages : defaults.packages;
