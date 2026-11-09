@@ -1,179 +1,186 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="FastTech Network — দ্রুতগতির ও নির্ভরযোগ্য ব্রডব্যান্ড ইন্টারনেট সেবা।">
-<title>FastTech Network | Fast. Reliable. Connected.</title>
-<link rel="icon" href="assets/favicon.svg">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastTech Network | Fast, Reliable, Connected.</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="topline">
-  <div class="wrap topinner">
-    <span>⚡ Fast. Reliable. Connected.</span>
-    <span>Customer Support: <a id="topPhone" href="tel:+8801622492004">+880 1622492004</a></span>
-  </div>
-</div>
 
-<header class="header">
-  <div class="wrap nav">
-    <a class="brand" href="#home">
-      <img src="assets/fasttech-logo.jpg" alt="FastTech Network logo">
-      <span>FASTTECH <small>NETWORK</small></span>
-    </a>
-    <button class="menu" id="menuBtn" aria-label="Open menu">☰</button>
-    <nav id="mainNav">
-      <a href="#home">হোম</a>
-      <a href="#about">আমাদের সম্পর্কে</a>
-      <a href="#packages">প্যাকেজ</a>
-      <a href="#coverage">কভারেজ</a>
-      <a href="#gallery">গ্যালারি</a>
-      <a href="#contact">যোগাযোগ</a>
-    </nav>
-    <a class="btn btn-small" href="dashboard.html">কাস্টমার লগইন ↗</a>
-  </div>
-</header>
-
-<main>
-<section class="hero" id="home">
-  <div class="wrap hero-content">
-    <div class="hero-copy">
-      <span class="eyebrow"><i></i> NEXT-GEN BROADBAND EXPERIENCE</span>
-      <h1>আপনার প্রতিদিনের<br><em>দ্রুত ও নির্ভরযোগ্য</em><br>ইন্টারনেট সংযোগ।</h1>
-      <p id="heroText">বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।</p>
-      <div class="hero-actions">
-        <a class="btn" href="#packages">প্যাকেজ দেখুন <b>→</b></a>
-        <a class="btn btn-ghost" href="#contact">সংযোগ নিতে যোগাযোগ করুন</a>
-      </div>
-      <div class="trust">
-        <span>✓ ১০০% আপটাইম গ্যারান্টি</span>
-        <span>✓ ২৪/৭ ফাস্ট কাস্টমার সাপোর্ট</span>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="speed-card">
-        <div class="speed-icon">⚡</div>
-        <small>ULTRA SPEED FIBER</small>
-        <strong>ALWAYS<br><b>CONNECTED.</b></strong>
-        <span>FASTTECH NETWORK</span>
-      </div>
-      <div class="float-tag">◉ লাইভ সাপোর্ট চালু আছে</div>
-    </div>
-  </div>
-</section>
-
-<section class="stats">
-  <div class="wrap stats-grid">
-    <div><b>01</b><span>হাই-স্পিড ফাইবার কানেক্টিভিটি</span></div>
-    <div><b>02</b><span>হোম ও বিজনেস প্যাকেজ</span></div>
-    <div><b>03</b><span>অভিজ্ঞ টেকনিক্যাল টিম</span></div>
-    <div><b>04</b><span>দ্রুততম সমস্যা সমাধান</span></div>
-  </div>
-</section>
-
-<section class="section packages" id="packages">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">CHOOSE YOUR SPEED</span>
-        <h2>আপনার জন্য সঠিক <em>প্যাকেজ</em></h2>
-        <p style="color:var(--muted); margin-top:10px;">আপনার প্রয়োজন অনুযায়ী হাই-স্পিড ইন্টারনেট প্ল্যান বেছে নিন।</p>
-      </div>
-      <span class="section-mark" style="color:var(--cyan); font-weight:700;">01 / PLANS</span>
-    </div>
-    <div class="package-grid" id="packageGrid"></div>
-    <p class="note" style="color:var(--muted); font-size:13px; margin-top:25px; text-align:center;">* প্যাকেজের গতি ও মূল্য সম্পর্কে বিস্তারিত জানতে সরাসরি যোগাযোগ করুন।</p>
-  </div>
-</section>
-
-<!-- কভারেজ সেকশন (গুগল ম্যাপ যুক্ত করা হয়েছে) -->
-<section class="section coverage" id="coverage">
-  <div class="wrap coverage-inner">
-    <div>
-      <span class="eyebrow">SERVICE AVAILABILITY</span>
-      <h2>আপনার এলাকায়<br><em>FastTech আছে তো?</em></h2>
-      <p style="color:var(--muted); margin: 15px 0;">আমাদের ফাইবার অপটিক নেটওয়ার্ক কোথায় কোথায় বিস্তৃত তা নিচে দেখুন:</p>
-      
-      <!-- এটি নিশ্চিত করুন যে এই আইডিটি আছে, যাতে জেমিন বা জাভাস্ক্রিপ্ট থেকে এলাকার নামগুলো এখানে বসে -->
-      <div class="coverage-locations" id="coverageLocations"></div>
-    </div>
-    
-    <!-- গুগল ম্যাপ বক্স -->
-    <div class="coverage-map" style="position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--panel-border); min-height: 350px;">
-      <iframe 
-        id="coverageMapIframe"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3698.814838612035!2d92.0805!3d22.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDAxJzIxLjAiTiA5MsKwMDQnNDkuOCJF!5e0!3m2!1sen!2sbd!4v1600000000000!5m2!1sen!2sbd" 
-        width="100%" 
-        height="100%" 
-        style="border:0; position: absolute; inset:0;" 
-        allowfullscreen="" 
-        loading="lazy">
-      </iframe>
-    </div>
-  </div>
-</section>
-
-<section class="section gallery" id="gallery">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">INSIDE FASTTECH</span>
-        <h2>আমাদের <em>গ্যালারি</em></h2>
-      </div>
-    </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
-</section>
-
-<!-- কন্টাক্ট সেকশন (গ্লাস-বক্স লেআউট) -->
-<section id="contact" class="contact-section">
-  <div class="wrap contact-grid">
-    
-    <!-- বামপাশের GET IN TOUCH গ্লাস-কার্ড বক্স -->
-    <div class="contact-card-box">
-      <span class="eyebrow">GET IN TOUCH</span>
-      <h2 style="color: #fff; margin: 10px 0;">কথা বলুন <br><span style="color: var(--cyan, #38bdf8);">আমাদের সঙ্গে।</span></h2>
-      <p class="muted" style="margin-bottom: 25px;">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
-
-      <div class="contact-details" style="display: flex; flex-direction: column; gap: 20px;">
-        <div class="detail-item">
-          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">PHONE / WHATSAPP</small>
-          <p id="contactPhone" style="color: #fff; font-weight: 600; margin-top: 3px;">+880 1622492004</p>
+    <!-- Topline -->
+    <div class="topline">
+        <div class="wrap topinner">
+            <div id="topPhoneContainer">📞 হটলাইন: <a id="topPhone" href="tel:+8801622492004">+880 1622492004</a></div>
+            <div>⚡ 100% আনলিমিটেড ব্রডব্যান্ড ইন্টারনেট</div>
         </div>
-        
-        <div class="detail-item">
-          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">OFFICE ADDRESS</small>
-          <p id="contactAddress" style="color: #fff; font-weight: 600; margin-top: 3px;">আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম</p>
-        </div>
-        
-        <div class="detail-item">
-          <small style="color: #94a3b8; font-size: 12px; letter-spacing: 1px;">SUPPORT HOURS</small>
-          <p id="contactHours" style="color: #fff; font-weight: 600; margin-top: 3px;">প্রতিদিন ২৪ ঘণ্টা খোলা</p>
-        </div>
-      </div>
     </div>
 
-    <!-- ডানপাশের "সংযোগের অনুরোধ" ফর্ম -->
-    <div class="contact-form-card">
-      <h2 style="color:#fff; margin-bottom: 20px;">সংযোগের অনুরোধ</h2>
-      <form id="leadForm" class="contact-form">
-        <label style="color:#94a3b8; font-size:13px;">আপনার নাম
-          <input type="text" name="name" placeholder="আপনার নাম লিখুন" required style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
-        </label>
-        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">মোবাইল নম্বর
-          <input type="tel" name="phone" placeholder="01XXXXXXXXX" required style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
-        </label>
-        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">আপনার এলাকা
-          <input type="text" name="area" placeholder="এলাকার নাম" style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;">
-        </label>
-        <label style="color:#94a3b8; font-size:13px; margin-top:15px; display:block;">বার্তা
-          <textarea name="message" placeholder="আপনার প্রয়োজন লিখুন" rows="3" style="width:100%; padding:10px; margin-top:5px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff;"></textarea>
-        </label>
-        <button class="btn" type="submit" style="width:100%; margin-top:20px;">WhatsApp-এ পাঠান ↗</button>
-      </form>
-    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="wrap nav">
+            <a href="#" class="brand">
+                <img src="assets/logo.png" alt="FastTech" onerror="this.style.display='none'">
+                <div>
+                    <span>FastTech <small>NETWORK</small></span>
+                </div>
+            </a>
+            <button class="menu" id="menuBtn">☰</button>
+            <nav id="mainNav">
+                <a href="#packages">প্যাকেজ</a>
+                <a href="#coverage">কভারেজ</a>
+                <a href="#gallery">গ্যালারি</a>
+                <a href="#contact">যোগাযোগ</a>
+            </nav>
+            <a href="admin.html" class="btn btn-small btn-ghost">অ্যাডমিন প্যানেল <b>→</b></a>
+        </div>
+    </header>
 
-  </div>
-</section>
-</
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="wrap hero-content">
+            <div class="hero-copy">
+                <span class="eyebrow"><i></i> FAST AND RELIABLE INTERNET</span>
+                <h1 id="heroText">বাসা, অফিস ও ব্যবসার জন্য স্থিতিশীল ব্রডব্যান্ড ইন্টারনেট এবং প্রয়োজনের সময় পাশে থাকা সাপোর্ট।</h1>
+                <div class="hero-actions">
+                    <a href="#packages" class="btn">প্যাকেজ দেখুন <b>↓</b></a>
+                    <a href="#contact" class="btn btn-ghost">সংযোগের অনুরোধ</a>
+                </div>
+                <div class="trust">
+                    <span>✓ 100% আনলিমিটেড ট্রাফিক</span>
+                    <span>✓ ২৪/৭ লাইভ কাস্টমার সাপোর্ট</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="speed-card">
+                    <div class="speed-icon">⚡</div>
+                    <small>ULTRA SPEED</small>
+                    <strong>100 <b>Mbps</b></strong>
+                    <span style="color:var(--muted); font-size:13px;">হাই-স্পিড অপটিক্যাল ফাইবার ইন্টারনেট</span>
+                </div>
+                <div class="float-tag">🟢 CONNECTED<br><small>FASTTECH NETWORK</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats">
+        <div class="wrap stats-grid">
+            <div><b>24/7</b> <span>সাপোর্ট ও মনিটরিং</span></div>
+            <div><b>BDIX</b> <span>সুপার ফাস্ট গেটওয়ে</span></div>
+            <div><b>100%</b> <span>ফাইবার অপটিক কানেক্টিভিটি</span></div>
+            <div><b>Fast</b> <span>ও নির্ভরযোগ্য স্পিড</span></div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="section packages" id="packages">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">CHOOSE YOUR SPEED</span>
+                    <h2>আপনার জন্য সঠিক <em>প্যাকেজ</em></h2>
+                </div>
+                <p style="color:var(--muted);">আপনার প্রয়োজন অনুযায়ী হাই-স্পিড ইন্টারনেট প্ল্যান বেছে নিন।</p>
+            </div>
+            <div class="package-grid" id="packageGrid"></div>
+            <p style="text-align:center; color:var(--muted); margin-top:30px; font-size:14px;">* প্যাকেজের গতি ও মূল্য সম্পর্কে বিস্তারিত জানতে সরাসরি যোগাযোগ করুন।</p>
+        </div>
+    </section>
+
+    <!-- Fiber Coverage Zone Section (ম্যাপ বাদ দিয়ে আগের মতো কভারেজ এলাকার নাম সহ) -->
+    <section class="section coverage" id="coverage">
+        <div class="wrap">
+            <div style="max-width: 700px;">
+                <span class="eyebrow">SERVICE AVAILABILITY</span>
+                <h2>আপনার এলাকায়<br><em>FastTech আছে তো?</em></h2>
+                <p style="color:var(--muted); margin: 15px 0 25px;">আমাদের ফাইবার অপটিক নেটওয়ার্ক কোথায় কোথায় বিস্তৃত তা নিচে দেখুন:</p>
+                <div class="coverage-locations" id="coverageLocations"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section" id="gallery">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">INSIDE FASTTECH</span>
+                    <h2>আমাদের <em>গ্যালারি</em></h2>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" style="background: linear-gradient(180deg, var(--bg) 0%, #03070d 100%);">
+        <div class="wrap contact-grid">
+            <div class="contact-card-box">
+                <span class="eyebrow">GET IN TOUCH</span>
+                <h2>কথা বলুন<br><em>আমাদের সঙ্গে।</em></h2>
+                <p style="color:var(--muted); margin: 15px 0 30px;">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
+                
+                <div style="display:grid; gap:20px;">
+                    <div>
+                        <small style="color:var(--cyan); font-weight:700; letter-spacing:1px;">PHONE / WHATSAPP</small>
+                        <div id="contactPhone" style="font-size:18px; font-weight:700; margin-top:5px;">+880 1622492004</div>
+                    </div>
+                    <div>
+                        <small style="color:var(--cyan); font-weight:700; letter-spacing:1px;">OFFICE ADDRESS</small>
+                        <div id="contactAddress" style="font-size:16px; margin-top:5px; color:var(--text);">আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম</div>
+                    </div>
+                    <div>
+                        <small style="color:var(--cyan); font-weight:700; letter-spacing:1px;">SUPPORT HOURS</small>
+                        <div id="contactHours" style="font-size:16px; margin-top:5px; color:var(--text);">প্রতিদিন ২৪ ঘণ্টা খোলা</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <form class="contact-form" id="contactForm">
+                    <h3 style="margin-top:0; font-family:'Plus Jakarta Sans'; font-size:24px;">সংযোগের অনুরোধ</h3>
+                    <label>আপনার নাম
+                        <input type="text" name="name" required placeholder="পুরো নাম লিখুন">
+                    </label>
+                    <label>মোবাইল নম্বর
+                        <input type="text" name="phone" required placeholder="০১৮XXXXXXXX">
+                    </label>
+                    <label>এলাকা / ঠিকানা
+                        <input type="text" name="area" required placeholder="আপনার এলাকা">
+                    </label>
+                    <label>বার্তা (ঐচ্ছিক)
+                        <textarea name="message" rows="3" placeholder="আপনার কোনো জিজ্ঞাসা থাকলে লিখুন"></textarea>
+                    </label>
+                    <button type="submit" class="btn" style="width:100%;">হোয়াটসঅ্যাপে পাঠান <b>→</b></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-main">
+                <div class="brand">
+                    <img src="assets/logo.png" alt="FastTech" onerror="this.style.display='none'">
+                    <div>
+                        <span>FastTech NETWORK</span>
+                        <small>FAST, RELIABLE, CONNECTED.</small>
+                    </div>
+                </div>
+                <div style="display:flex; gap:20px;">
+                    <a href="#packages">Packages</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© <span id="year"></span> FastTech Network. All rights reserved.</div>
+                <div>Designed for Excellence</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
