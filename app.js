@@ -1,6 +1,51 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
-const dbClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// কাস্টম ফেচ ক্লায়েন্ট যা সরাসরি Supabase REST API ব্যবহার করে
+const dbClient = {
+    from: (table) => ({
+        select: (columns) => ({
+            eq: (col, val) => ({
+                single: async () => {
+                    try {
+                        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}&${col}=eq.${val}`, {
+                            headers: {
+                                'apikey': SUPABASE_KEY,
+                                'Authorization': `Bearer ${SUPABASE_KEY}`
+                            }
+                        });
+                        const data = await res.json();
+                        if (!res.ok) return { error: data };
+                        return { data: Array.isArray(data) ? data[0] : data, error: null };
+                    } catch (err) {
+                        return { error: err };
+                    }
+                }
+            })
+        }),
+        upsert: async (payload) => {
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'resolution=merge-duplicates'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    const errText = await res.text();
+                    return { error: { message: errText } };
+                }
+                return { error: null };
+            } catch (err) {
+                return { error: err };
+            }
+        }
+    })
+};
 
 const KEY = 'fasttechPremiumData';
 const defaults = {
