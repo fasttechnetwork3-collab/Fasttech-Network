@@ -1,6 +1,8 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ডিক্লেয়ারেশন চেক সহ ইনিশিয়ালাইজেশন
+const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 const KEY='fasttechPremiumData';
 const defaults={
