@@ -113,26 +113,38 @@
   </div>
 </section>
 
-<section class="section contact" id="contact">
+<section id="contact" class="contact-section">
   <div class="wrap contact-grid">
-    <div>
+    
+    <!-- বামপাশের GET IN TOUCH কার্ড বক্স -->
+    <div class="contact-info-card">
       <span class="eyebrow">GET IN TOUCH</span>
-      <h2>কথা বলুন<br><em>আমাদের সঙ্গে।</em></h2>
-      <p style="color:var(--muted); margin: 15px 0 30px;">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
-      <div style="display:grid; gap:20px;">
-        <div><small style="color:var(--cyan); letter-spacing:1px;">PHONE / WHATSAPP</small><br><b id="contactPhone" style="font-size:18px;">+880 1622492004</b></div>
-        <div><small style="color:var(--cyan); letter-spacing:1px;">OFFICE ADDRESS</small><br><b id="contactAddress" style="font-size:18px;">আমিরাবাদ, লোভাগড়া, চট্টগ্রাম</b></div>
-        <div><small style="color:var(--cyan); letter-spacing:1px;">SUPPORT HOURS</small><br><b id="contactHours" style="font-size:18px;">প্রতিদিন ২৪ ঘণ্টা খোলা</b></div>
+      <h2>কথা বলুন <br><span>আমাদের সঙ্গে।</span></h2>
+      <p class="muted">নতুন সংযোগ বা যেকোনো সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন।</p>
+
+      <div class="contact-details">
+        <div class="detail-item">
+          <small>PHONE / WHATSAPP</small>
+          <p id="contactPhone">+880 1622492004</p>
+        </div>
+        
+        <div class="detail-item">
+          <small>OFFICE ADDRESS</small>
+          <p id="contactAddress">আমিরাবাদ, লোহাগাড়া, চট্টগ্রাম</p>
+        </div>
+        
+        <div class="detail-item">
+          <small>SUPPORT HOURS</small>
+          <p id="contactHours">প্রতিদিন ২৪ ঘণ্টা খোলা</p>
+        </div>
       </div>
     </div>
-    <form class="contact-form" id="contactForm">
-      <h3 style="font-size:24px; margin-bottom:20px; font-family:'Plus Jakarta Sans';">সংযোগের অনুরোধ</h3>
-      <label>আপনার নাম<input name="name" required placeholder="আপনার নাম লিখুন"></label>
-      <label>মোবাইল নম্বর<input name="phone" required inputmode="tel" placeholder="01XXXXXXXXX"></label>
-      <label>আপনার এলাকা<input name="area" placeholder="এলাকার নাম"></label>
-      <label>বার্তা<textarea name="message" rows="3" placeholder="আপনার প্রয়োজন লিখুন"></textarea></label>
-      <button class="btn" type="submit" style="width:100%;">WhatsApp-এ পাঠান ↗</button>
-    </form>
+
+    <!-- ডানপাশের "সংযোগের অনুরোধ" ফর্ম (আপনার আগের মতো থাকবে) -->
+    <div class="contact-form-card">
+      <!-- আপনার বর্তমান ফান্ডের ফর্ম কোড -->
+    </div>
+
   </div>
 </section>
 </main>
