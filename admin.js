@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // নতুন কাস্টমার ডাটাবেজে যুক্ত করার ফর্ম সাবমিট লজিক
     // -------------------------------------------------------------
-  const addCustomerForm = document.getElementById('addCustomerForm');
+const addCustomerForm = document.getElementById('addCustomerForm');
     if (addCustomerForm) {
         addCustomerForm.onsubmit = async function(e) {
             e.preventDefault();
@@ -386,14 +386,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(newCustomer)
                 });
 
-                const resData = await response.json();
+                const resText = await response.text();
+                console.log("Server Response:", resText);
 
                 if (response.ok) {
                     alert('সফলভাবে নতুন কাস্টমার ডাটাবেজে যুক্ত করা হয়েছে!');
                     addCustomerForm.reset();
                 } else {
-                    console.error('Supabase Error Details:', resData);
-                    alert('সংরক্ষণ করতে সমস্যা হয়েছে: ' + (resData.message || resData.details || 'ডাটাবেজ রিকোয়েস্ট ভুল হয়েছে।'));
+                    alert('সেভ করতে সমস্যা হয়েছে। কনসোল (Console) চেক করুন।');
                 }
             } catch (err) {
                 console.error(err);
