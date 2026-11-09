@@ -1,7 +1,7 @@
 const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
 
-// আল্ট্রা-সেফ ফেচ মেথড
+// সঠিক REST API ফেচ ক্লায়েন্ট (নতুন sb_publishable কী-এর জন্য প্রস্তুতকৃত)
 const dbClient = {
     from: (table) => ({
         select: (columns) => ({
@@ -9,13 +9,13 @@ const dbClient = {
                 single: async () => {
                     try {
                         const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}&${col}=eq.${val}`, {
+                            method: 'GET',
                             headers: {
                                 'apikey': SUPABASE_KEY,
-                                'Authorization': `Bearer ${SUPABASE_KEY}`,
                                 'Content-Type': 'application/json'
                             }
                         });
-                        if (!res.ok) return { error: { message: 'Fetch failed' } };
+                        if (!res.ok) return { error: await res.json() };
                         const data = await res.json();
                         return { data: Array.isArray(data) ? data[0] : data, error: null };
                     } catch (err) {
@@ -30,20 +30,19 @@ const dbClient = {
                     method: 'POST',
                     headers: {
                         'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
                         'Content-Type': 'application/json',
                         'Prefer': 'resolution=merge-duplicates'
                     },
                     body: JSON.stringify(payload)
                 });
                 if (!res.ok) {
-                    const err = await res.text();
-                    console.warn('Cloud sync deferred, saved locally:', err);
-                    return { error: null }; // লোকাল ব্যাকআপ ঠিক রাখতে ফেইল করলেও ফ্লো ব্রেক করবে না
+                    const errText = await res.text();
+                    console.error('Save error details:', errText);
+                    return { error: { message: errText } };
                 }
                 return { error: null };
             } catch (err) {
-                return { error: null };
+                return { error: err };
             }
         }
     })
