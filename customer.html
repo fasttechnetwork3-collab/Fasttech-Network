@@ -34,16 +34,19 @@
         <!-- Login Section -->
         <div id="loginSection" class="login-box">
             <span class="eyebrow">CUSTOMER PORTAL</span>
-            <h2 style="margin: 15px 0 25px; font-family:'Plus Jakarta Sans'; font-size: 26px;">আপনার কাস্টমার আইডি বা মোবাইল নম্বর দিয়ে লগইন করুন</h2>
+            <h2 style="margin: 15px 0 25px; font-family:'Plus Jakarta Sans'; font-size: 24px;">কাস্টমার পোর্টাল লগইন</h2>
             <form id="customerLoginForm" style="display:grid; gap:20px;">
                 <label style="color:var(--muted); display:grid; gap:8px;">কাস্টমার আইডি বা মোবাইল নম্বর
-                    <input type="text" id="custIdentity" required placeholder="উদাহরণ: 01622492004 বা CUST-101" style="width:100%; background:#030712; border:1px solid var(--panel-border); color:#fff; padding:14px; border-radius:12px; outline:none;">
+                    <input type="text" id="custIdentity" required placeholder="উদাহরণ: 01622492004 বা 101" style="width:100%; background:#030712; border:1px solid var(--panel-border); color:#fff; padding:14px; border-radius:12px; outline:none;">
+                </label>
+                <label style="color:var(--muted); display:grid; gap:8px;">পাসওয়ার্ড (নামের শেষের অংশ)
+                    <input type="password" id="custPass" required placeholder="আপনার নামের শেষের অংশ লিখুন" style="width:100%; background:#030712; border:1px solid var(--panel-border); color:#fff; padding:14px; border-radius:12px; outline:none;">
                 </label>
                 <button type="submit" class="btn" style="width:100%;">লগইন করুন <b>→</b></button>
             </form>
         </div>
 
-        <!-- Dashboard Section (Hidden by default until login) -->
+        <!-- Dashboard Section -->
         <div id="dashboardSection" class="dashboard-box" style="display:none;">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:20px; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
                 <div>
@@ -83,17 +86,22 @@
     </div>
 
     <script>
-        // ডেমো কাস্টমার ডেটা (পরে ইচ্ছেমতো পরিবর্তন বা অ্যাডমিন প্যানেল থেকে কানেক্ট করা যাবে)
+        // ডেমো ডেটা: এখানে কাস্টমারদের নাম, আইডি, ফোন এবং পাসওয়ার্ড (নামের শেষের অংশ) সেট করা আছে
         const sampleCustomers = [
-            { id: "101", phone: "01622492004", name: "আব্দুল্লাহ আল মামুন", package: "Flash (100 Mbps)", bill: "৳1000", address: "আমিরাবাদ, লোহাগাড়া" },
-            { id: "102", phone: "01811111111", name: "মোহাম্মদ জাবের", package: "Turbo (50 Mbps)", bill: "৳800", address: "লোহাগাড়া সদর" }
+            { id: "101", phone: "01622492004", name: "আব্দুল্লাহ আল মামুন", lastName: "মামুন", package: "Flash (100 Mbps)", bill: "৳1000", address: "আমিরাবাদ, লোহাগাড়া" },
+            { id: "102", phone: "01811111111", name: "মোহাম্মদ জাবের", lastName: "জাবের", package: "Turbo (50 Mbps)", bill: "৳800", address: "লোহাগাড়া সদর" }
         ];
 
         document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const val = document.getElementById('custIdentity').value.trim();
+            const identity = document.getElementById('custIdentity').value.trim();
+            const password = document.getElementById('custPass').value.trim().toLowerCase();
             
-            const customer = sampleCustomers.find(c => c.id === val || c.phone === val);
+            // আইডি বা ফোন এবং পাসওয়ার্ড (নামের শেষের অংশ) মিলিয়ে দেখা
+            const customer = sampleCustomers.find(c => 
+                (c.id === identity || c.phone === identity) && 
+                c.lastName.toLowerCase() === password
+            );
 
             if(customer) {
                 document.getElementById('cName').textContent = customer.name;
@@ -106,7 +114,7 @@
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('dashboardSection').style.display = 'block';
             } else {
-                alert('দুঃখিত, এই আইডি বা মোবাইল নম্বর দিয়ে কোনো কাস্টমার পাওয়া যায়নি।');
+                alert('দুঃখিত! কাস্টমার আইডি/নম্বর অথবা পাসওয়ার্ড (নামের শেষের অংশ) সঠিক নয়।');
             }
         });
 
@@ -114,6 +122,7 @@
             document.getElementById('dashboardSection').style.display = 'none';
             document.getElementById('loginSection').style.display = 'block';
             document.getElementById('custIdentity').value = '';
+            document.getElementById('custPass').value = '';
         }
     </script>
 </body>
