@@ -56,7 +56,8 @@ async function put(d) {
     adminDataState = d;
     localStorage.setItem(KEY, JSON.stringify(d));
     try {
-        await supabase.from('site_data').upsert({ id: 1, content: d });
+        const { error } = await supabase.from('site_data').upsert({ id: 1, content: d });
+        if (error) console.error('Supabase save error:', error.message);
     } catch (err) {
         console.error('Supabase sync error:', err);
     }
@@ -67,7 +68,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 function fileData(file) {
     return new Promise((res, rej) => {
         if (!file) return res('');
-        if (file.size > 1500000) return rej(Error('প্রতি ছবির সাইজ ১.৫ MB-এর কম রাখুন।'));
+        if (file.size > 2000000) return rej(Error('প্রতি ছবির সাইজ ২ MB-এর কম রাখুন।'));
         const r = new FileReader();
         r.onload = () => res(r.result);
         r.onerror = rej;
@@ -76,46 +77,98 @@ function fileData(file) {
 }
 
 function draw() {
-    const d = get(), f = document.getElementById('settingsForm');
+    const d = get();
+    
+    // Settings form fill
+    const f = document.getElementById('settingsForm');
     if (f) {
         ['name','heroText','phone','whatsapp','address','hours'].forEach(k => {
-            if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = d[k] || '';
+            if (f.elements[k] && document.activeElement !== f.elements[k]) {
+                f.elements[k].value = d[k] || '';
+            }
         });
     }
+
     const adminLogoEl = document.getElementById('adminLogo');
-    if (adminLogoEl) adminLogoEl.src = d.logo || 'assets/fasttech-logo.jpg';
+    if (adminLogoEl && d.logo) adminLogoEl.src = d.logo;
     
     const previews = document.getElementById('brandPreviews');
-    if (previews) previews.innerHTML = `${d.logo ? `<img class="preview-img" src="${d.logo}" alt="Logo">` : ''}`;
+    if (previews) {
+        previews.innerHTML = `${d.logo ? `<img class="preview-img" src="${d.logo}" alt="Logo">` : ''}`;
+    }
 
+    // Package List Render
     const pList = document.getElementById('packageList');
-    if (pList) pList.innerHTML = d.packages.map(p => `<div class="admin-item"><div><b>${esc(p.title)}</b><br><small>${esc(p.speed)} · ${esc(p.price)}</small></div><div style="display:flex;gap:8px;"><button type="button" class="btn btn-small" data-edit-package="${p.id}">Edit</button><button type="button" class="danger" data-del-package="${p.id}">মুছুন</button></div></div>`).join('') || '<p style="color:var(--muted)">এখনো কোনো প্যাকেজ নেই।</p>';
+    if (pList) {
+        pList.innerHTML = (d.packages && d.packages.length > 0) 
+            ? d.packages.map(p => `
+                <div class="admin-item" style="display:flex; justify-content:space-between; align-items:center; background:#050b14; border:1px solid rgba(38,92,148,0.3); padding:15px; border-radius:14px; margin-top:12px;">
+                    <div>
+                        <b>${esc(p.title)}</b><br>
+                        <small style="color:var(--cyan);">${esc(p.speed)} · ${esc(p.price)}</small>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button type="button" class="btn btn-small" data-edit-package="${p.id}">Edit</button>
+                        <button type="button" class="danger" data-del-package="${p.id}">মুছুন</button>
+                    </div>
+                </div>`).join('') 
+            : '<p style="color:var(--muted); margin-top:10px;">এখনো কোনো প্যাকেজ নেই।</p>';
+    }
 
+    // Coverage List Render
     const cList = document.getElementById('coverageList');
-    if (cList) cList.innerHTML = (d.coverageLocations || []).map(loc => `<div class="admin-item"><div><b>${esc(loc.name)}</b></div><div style="display:flex;gap:8px;"><button type="button" class="btn btn-small" data-edit-coverage="${loc.id}">Edit</button><button type="button" class="danger" data-del-coverage="${loc.id}">Delete</button></div></div>`).join('') || '<p style="color:var(--muted)">কোনো এলাকা নেই।</p>';
+    if (cList) {
+        cList.innerHTML = (d.coverageLocations && d.coverageLocations.length > 0) 
+            ? d.coverageLocations.map(loc => `
+                <div class="admin-item" style="display:flex; justify-content:space-between; align-items:center; background:#050b14; border:1px solid rgba(38,92,148,0.3); padding:15px; border-radius:14px; margin-top:12px;">
+                    <div><b>${esc(loc.name)}</b></div>
+                    <div style="display:flex; gap:8px;">
+                        <button type="button" class="btn btn-small" data-edit-coverage="${loc.id}">Edit</button>
+                        <button type="button" class="danger" data-del-coverage="${loc.id}">Delete</button>
+                    </div>
+                </div>`).join('') 
+            : '<p style="color:var(--muted); margin-top:10px;">কোনো কভারেজ এলাকা নেই।</p>';
+    }
 
+    // Gallery List Render
     const gList = document.getElementById('galleryList');
-    if (gList) gList.innerHTML = d.gallery.map(g => `<div class="admin-item"><b>${esc(g.title)}</b><button type="button" class="danger" data-del-gallery="${g.id}">মুছুন</button></div>`).join('') || '<p style="color:var(--muted)">গ্যালারিতে ছবি নেই।</p>';
+    if (gList) {
+        gList.innerHTML = (d.gallery && d.gallery.length > 0) 
+            ? d.gallery.map(g => `
+                <div class="admin-item" style="display:flex; justify-content:space-between; align-items:center; background:#050b14; border:1px solid rgba(38,92,148,0.3); padding:15px; border-radius:14px; margin-top:12px;">
+                    <b>${esc(g.title)}</b>
+                    <button type="button" class="danger" data-del-gallery="${g.id}">মুছুন</button>
+                </div>`).join('') 
+            : '<p style="color:var(--muted); margin-top:10px;">গ্যালারিতে কোনো ছবি নেই।</p>';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     loadAdminDataFromSupabase();
 
+    // 1. Settings Form Submit
     const sf = document.getElementById('settingsForm');
-    if (sf) sf.onsubmit = async e => {
-        e.preventDefault();
-        try {
-            const d = get(), f = e.target;
-            ['name','heroText','phone','whatsapp','address','hours'].forEach(k => d[k] = f.elements[k].value.trim());
-            if (f.logo.files[0]) d.logo = await fileData(f.logo.files[0]);
-            if (f.heroImage.files[0]) d.heroImage = await fileData(f.heroImage.files[0]);
-            await put(d);
-            f.logo.value = ''; f.heroImage.value = '';
-            draw();
-            alert('তথ্য সফলভাবে সংরক্ষিত ও ক্লাউডে সিঙ্ক হয়েছে!');
-        } catch (err) { alert(err.message); }
-    };
+    if (sf) {
+        sf.onsubmit = async e => {
+            e.preventDefault();
+            try {
+                const d = get();
+                ['name','heroText','phone','whatsapp','address','hours'].forEach(k => {
+                    if (sf.elements[k]) d[k] = sf.elements[k].value.trim();
+                });
+                if (sf.logo.files[0]) d.logo = await fileData(sf.logo.files[0]);
+                if (sf.heroImage.files[0]) d.heroImage = await fileData(sf.heroImage.files[0]);
+                
+                await put(d);
+                sf.logo.value = ''; 
+                sf.heroImage.value = '';
+                draw();
+                alert('তথ্য সফলভাবে সংরক্ষিত ও ক্লাউডে সিঙ্ক হয়েছে!');
+            } catch (err) { alert(err.message); }
+        };
+    }
 
+    // 2. Package Form Submit & Edit
     const pf = document.getElementById('packageForm');
     function clearPackage() {
         if (!pf) return;
@@ -124,23 +177,45 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('packageFormTitle').textContent = 'নতুন প্যাকেজ যোগ করুন';
         document.getElementById('packageSave').textContent = 'প্যাকেজ যোগ করুন';
         const cancelBtn = document.getElementById('cancelEdit');
-        if(cancelBtn) cancelBtn.hidden = true;
+        if (cancelBtn) cancelBtn.hidden = true;
     }
-    if (pf) pf.onsubmit = async e => {
-        e.preventDefault();
-        try {
-            const d = get(), f = e.target, id = f.elements.id.value, old = d.packages.find(p => p.id == id), image = f.image.files[0] ? await fileData(f.image.files[0]) : (old?.image || '');
-            const p = { id: id ? Number(id) : Date.now(), title: f.title.value.trim(), speed: f.speed.value.trim(), price: f.price.value.trim(), desc: f.desc.value.trim(), image };
-            if (id) d.packages = d.packages.map(x => x.id == id ? p : x);
-            else d.packages.push(p);
-            await put(d);
-            clearPackage();
-            draw();
-        } catch (err) { alert(err.message); }
-    };
+
+    if (pf) {
+        pf.onsubmit = async e => {
+            e.preventDefault();
+            try {
+                const d = get();
+                const id = pf.elements.id.value;
+                const old = d.packages.find(p => p.id == id);
+                const image = pf.image.files[0] ? await fileData(pf.image.files[0]) : (old?.image || '');
+                
+                const pObj = { 
+                    id: id ? Number(id) : Date.now(), 
+                    title: pf.title.value.trim(), 
+                    speed: pf.speed.value.trim(), 
+                    price: pf.price.value.trim(), 
+                    desc: pf.desc.value.trim(), 
+                    image 
+                };
+
+                if (id) {
+                    d.packages = d.packages.map(x => x.id == id ? pObj : x);
+                } else {
+                    d.packages.push(pObj);
+                }
+
+                await put(d);
+                clearPackage();
+                draw();
+                alert('প্যাকেজ সফলভাবে সংরক্ষিত হয়েছে!');
+            } catch (err) { alert(err.message); }
+        };
+    }
+
     const cancelEditBtn = document.getElementById('cancelEdit');
     if (cancelEditBtn) cancelEditBtn.onclick = clearPackage;
 
+    // 3. Coverage Form Submit & Edit
     const cf = document.getElementById('coverageForm');
     function clearCoverage() {
         if (!cf) return;
@@ -148,37 +223,105 @@ document.addEventListener('DOMContentLoaded', () => {
         cf.elements.id.value = '';
         document.getElementById('coverageSave').textContent = 'Add Location';
         const cancelBtn = document.getElementById('coverageCancel');
-        if(cancelBtn) cancelBtn.hidden = true;
+        if (cancelBtn) cancelBtn.hidden = true;
     }
-    if (cf) cf.onsubmit = async e => {
-        e.preventDefault();
-        const d = get(), id = cf.elements.id.value, name = cf.elements.name.value.trim();
-        if (!name) return;
-        d.coverageLocations = d.coverageLocations || [];
-        if (id) {
-            d.coverageLocations = d.coverageLocations.map(x => String(x.id) === String(id) ? {...x, name} : x);
-        } else {
-            d.coverageLocations.push({ id: Date.now(), name });
-        }
-        await put(d);
-        clearCoverage();
-        draw();
-    };
 
-    const gf = document.getElementById('galleryForm');
-    if (gf) gf.onsubmit = async e => {
-        e.preventDefault();
-        try {
-            const f = e.target, d = get(), files = [...f.images.files];
-            for (const file of files) d.gallery.push({ id: Date.now() + Math.random(), title: f.title.value, image: await fileData(file) });
+    if (cf) {
+        cf.onsubmit = async e => {
+            e.preventDefault();
+            const d = get();
+            const id = cf.elements.id.value;
+            const name = cf.elements.name.value.trim();
+            if (!name) return;
+
+            d.coverageLocations = d.coverageLocations || [];
+            if (id) {
+                d.coverageLocations = d.coverageLocations.map(x => String(x.id) === String(id) ? {...x, name} : x);
+            } else {
+                d.coverageLocations.push({ id: Date.now(), name });
+            }
+
             await put(d);
-            f.reset();
+            clearCoverage();
             draw();
-        } catch (err) { alert(err.message); }
-    };
+            alert('কভারেজ এলাকা সফলভাবে সংরক্ষিত হয়েছে!');
+        };
+    }
 
+    const coverageCancel = document.getElementById('coverageCancel');
+    if (coverageCancel) coverageCancel.onclick = clearCoverage;
+
+    // 4. Gallery Form Submit
+    const gf = document.getElementById('galleryForm');
+    if (gf) {
+        gf.onsubmit = async e => {
+            e.preventDefault();
+            try {
+                const d = get();
+                const files = [...gf.images.files];
+                d.gallery = d.gallery || [];
+                for (const file of files) {
+                    d.gallery.push({ id: Date.now() + Math.random(), title: gf.title.value, image: await fileData(file) });
+                }
+                await put(d);
+                gf.reset();
+                draw();
+                alert('গ্যালারিতে ছবি সফলভাবে যুক্ত হয়েছে!');
+            } catch (err) { alert(err.message); }
+        };
+    }
+
+    // 5. Backup, Restore & Reset Buttons
+    const backupBtn = document.getElementById('backup');
+    if (backupBtn) {
+        backupBtn.onclick = () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(get(), null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "fasttech_backup_" + Date.now() + ".json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+        };
+    }
+
+    const restoreInput = document.getElementById('restore');
+    if (restoreInput) {
+        restoreInput.onchange = e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async event => {
+                try {
+                    const parsed = JSON.parse(event.target.result);
+                    await put(parsed);
+                    draw();
+                    alert('ব্যাকআপ সফলভাবে রিস্টোর করা হয়েছে!');
+                } catch (err) {
+                    alert('রিস্টোর করতে সমস্যা হয়েছে: সঠিক JSON ফাইল দিন।');
+                }
+            };
+            reader.readAsText(file);
+        };
+    }
+
+    const resetBtn = document.getElementById('reset');
+    if (resetBtn) {
+        resetBtn.onclick = async () => {
+            if (confirm('আপনি কি নিশ্চিতভাবে সব ডেটা রিসেট করে ডিফল্টে ফিরিয়ে নিতে চান?')) {
+                await put(clone(base));
+                draw();
+                alert('ডেমো ডেটা রিসেট করা হয়েছে!');
+            }
+        };
+    }
+
+    // Global Click Handler for Edit / Delete triggers
     document.addEventListener('click', async e => {
-        const t = e.target, d = get();
+        const t = e.target;
+        const d = get();
+
+        // Edit Package
         if (t.dataset.editPackage) {
             const p = d.packages.find(x => x.id == t.dataset.editPackage);
             if (!p || !pf) return;
@@ -186,29 +329,51 @@ document.addEventListener('DOMContentLoaded', () => {
             pf.elements.title.value = p.title;
             pf.elements.speed.value = p.speed;
             pf.elements.price.value = p.price;
-            pf.elements.desc.value = p.desc;
+            pf.elements.desc.value = p.desc || '';
             document.getElementById('packageFormTitle').textContent = 'প্যাকেজ সম্পাদনা করুন';
             document.getElementById('packageSave').textContent = 'পরিবর্তন সংরক্ষণ';
-            document.getElementById('cancelEdit').hidden = false;
+            const cancelBtn = document.getElementById('cancelEdit');
+            if (cancelBtn) cancelBtn.hidden = false;
+            window.scrollTo({ top: pf.offsetTop - 50, behavior: 'smooth' });
         }
+
+        // Delete Package
         if (t.dataset.delPackage) {
-            if (confirm('প্যাকেজটি মুছে ফেলবেন?')) {
+            if (confirm('প্যাকেজটি মুছে ফেলতে চান?')) {
                 d.packages = d.packages.filter(p => p.id != t.dataset.delPackage);
                 await put(d);
                 draw();
             }
         }
+
+        // Edit Coverage
+        if (t.dataset.editCoverage) {
+            const loc = (d.coverageLocations || []).find(x => String(x.id) === String(t.dataset.editCoverage));
+            if (!loc || !cf) return;
+            cf.elements.id.value = loc.id;
+            cf.elements.name.value = loc.name;
+            document.getElementById('coverageSave').textContent = 'Update Location';
+            const cancelBtn = document.getElementById('coverageCancel');
+            if (cancelBtn) cancelBtn.hidden = false;
+            window.scrollTo({ top: cf.offsetTop - 50, behavior: 'smooth' });
+        }
+
+        // Delete Coverage
         if (t.dataset.delCoverage) {
-            if (confirm('এলাকাটি মুছে ফেলবেন?')) {
+            if (confirm('এলাকাটি মুছে ফেলতে চান?')) {
                 d.coverageLocations = (d.coverageLocations || []).filter(x => String(x.id) !== String(t.dataset.delCoverage));
                 await put(d);
                 draw();
             }
         }
+
+        // Delete Gallery
         if (t.dataset.delGallery) {
-            d.gallery = d.gallery.filter(g => g.id != t.dataset.delGallery);
-            await put(d);
-            draw();
+            if (confirm('ছবিটি মুছে ফেলতে চান?')) {
+                d.gallery = d.gallery.filter(g => g.id != t.dataset.delGallery);
+                await put(d);
+                draw();
+            }
         }
     });
 });
