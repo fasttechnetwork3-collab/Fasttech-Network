@@ -1,6 +1,6 @@
 // আপনার সিক্রেট পাসওয়ার্ড (আপনার ইচ্ছেমতো পরিবর্তন করতে পারেন)
 const ADMIN_PASSWORD = "775481"; 
-
+document.getElementById('addCustomerSection').style.display = 'block';
 // পেজ লোড হলে চেক করবে আগে লগইন করা আছে কিনা
 document.addEventListener("DOMContentLoaded", () => {
     if (sessionStorage.getItem("isAdminAuthenticated") === "true") {
