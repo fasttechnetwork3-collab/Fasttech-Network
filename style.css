@@ -154,3 +154,52 @@ h1 em { font-style: normal; background: linear-gradient(135deg, #00d2ff, #0066ff
   .nav nav.open { display: flex; }
   .hero-content, .contact-grid, .package-grid, .gallery-grid, .stats-grid { grid-template-columns: 1fr; gap: 25px; }
 }
+/* Admin Panel Modern Layout Fix */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 15px;
+}
+
+.admin-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.admin-form input, 
+.admin-form textarea {
+  width: 100%;
+  background: #030712;
+  border: 1px solid var(--panel-border);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.admin-form input:focus, 
+.admin-form textarea:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px var(--glow);
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  align-items: start;
+}
+
+@media(max-width: 900px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
