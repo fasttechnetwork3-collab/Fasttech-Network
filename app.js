@@ -1,4 +1,4 @@
-const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://ojfessfzctevkwzcfzse.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FK_I6gvQDJChrgU5bNHrQ_acBR83um';
 
 // সঠিক REST API ফেচ ক্লায়েন্ট (নতুন sb_publishable কী-এর জন্য প্রস্তুতকৃত)
