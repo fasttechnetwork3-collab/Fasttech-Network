@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // নতুন কাস্টমার ডাটাবেজে যুক্ত করার ফর্ম সাবমিট লজিক
     // -------------------------------------------------------------
-    const addCustomerForm = document.getElementById('addCustomerForm');
+  const addCustomerForm = document.getElementById('addCustomerForm');
     if (addCustomerForm) {
         addCustomerForm.onsubmit = async function(e) {
             e.preventDefault();
@@ -381,17 +381,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         'apikey': SUPABASE_KEY,
                         'Authorization': `Bearer ${SUPABASE_KEY}`,
                         'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
+                        'Prefer': 'return=representation'
                     },
                     body: JSON.stringify(newCustomer)
                 });
+
+                const resData = await response.json();
 
                 if (response.ok) {
                     alert('সফলভাবে নতুন কাস্টমার ডাটাবেজে যুক্ত করা হয়েছে!');
                     addCustomerForm.reset();
                 } else {
-                    const errData = await response.json();
-                    alert('সংরক্ষণ করতে সমস্যা হয়েছে: এই আইডি বা মোবাইল নম্বর ইতিমধ্যে থাকতে পারে।');
+                    console.error('Supabase Error Details:', resData);
+                    alert('সংরক্ষণ করতে সমস্যা হয়েছে: ' + (resData.message || resData.details || 'ডাটাবেজ রিকোয়েস্ট ভুল হয়েছে।'));
                 }
             } catch (err) {
                 console.error(err);
