@@ -65,6 +65,19 @@
           <label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label>
           <button class="btn">তথ্য সংরক্ষণ করুন</button>
         </form>
+        <!-- লোগো আপলোড ও ডিলিট সেকশন -->
+<div class="form-group">
+    <label>লোগো পরিবর্তন</label>
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <input type="file" id="logoInput" class="form-control-file">
+        <button type="button" id="deleteLogoBtn" class="btn btn-danger" style="background: #ff4d4d; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">লোগো ডিলিট করুন</button>
+    </div>
+</div>
+
+<!-- লোগো প্রিভিউ বক্স -->
+<div class="logo-preview-container" style="margin-top: 10px;">
+    <img id="currentLogoPreview" src="assets/Fasttech-logo.jpg" alt="Logo Preview" style="height: 50px; border-radius: 4px; border: 1px solid rgba(0,212,255,0.4);">
+</div>
         <div class="admin-previews" id="brandPreviews"></div>
       </section>
 
@@ -127,6 +140,22 @@
         </form>
         <div class="admin-list" id="galleryList"></div>
       </section>
+      <!-- গ্যালারিতে ছবি ম্যানেজমেন্ট ও ডিলিট লিস্ট -->
+<div class="admin-section" style="margin-top: 20px;">
+    <h3 style="font-size: 16px; color: #00d4ff; margin-bottom: 10px;">গ্যালারি ছবি ম্যানেজমেন্ট</h3>
+    <div id="adminGalleryList" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- ডাইনামিকভাবে আপলোড করা গ্যালারি আইটেমগুলো এখানে লুপ হয়ে আসবে -->
+        <div class="gallery-item-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="assets/gallery-sample.jpg" alt="Gallery" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">
+                <span style="font-size: 13px; color: #fff;">Network Installation</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn-delete-gallery" data-id="1" style="background: #ff4d4d; color: #white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
       <!-- ৬. ডেটা ব্যাকআপ ও রিস্টোর -->
       <section class="panel">
