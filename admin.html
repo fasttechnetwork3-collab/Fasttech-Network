@@ -65,13 +65,12 @@
           <label>Hero Banner ছবি<input name="heroImage" type="file" accept="image/*"></label>
           <button class="btn">তথ্য সংরক্ষণ করুন</button>
         </form>
-        <!-- লোগো আপলোড ও ডিলিট সেকশন -->
-<div class="form-group">
-    <label>লোগো পরিবর্তন</label>
-    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <input type="file" id="logoInput" class="form-control-file">
-        <button type="button" id="deleteLogoBtn" class="btn btn-danger" style="background: #ff4d4d; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">লোগো ডিলিট করুন</button>
+       <!-- লোগো প্রিভিউ ও ডিলিট সেকশন -->
+<div style="margin-top: 15px;">
+    <div id="logoPreviewContainer" style="margin-bottom: 10px;">
+        <img id="currentLogoPreview" src="assets/Fasttech-logo.jpg" alt="Logo Preview" style="max-width: 200px; height: auto; border-radius: 6px; border: 1.5px solid rgba(0, 212, 255, 0.6); box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);">
     </div>
+    <button type="button" id="deleteLogoBtn" class="btn btn-danger" style="background: #ff4d4d; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">লোগো ডিলিট করুন</button>
 </div>
 
 <!-- লোগো প্রিভিউ বক্স -->
