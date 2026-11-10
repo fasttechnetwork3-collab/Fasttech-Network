@@ -178,3 +178,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// লোগো ডিলিট করার ফাংশন
+document.getElementById('deleteLogoBtn')?.addEventListener('click', async () => {
+    if (confirm('আপনি কি নিশ্চিতভাবে লোগোটি ডিলিট করতে চান?')) {
+        try {
+            // Supabase স্টোরেজ বা ডাটাবেস থেকে লোগো রিমুভ করার কোড
+            // যেমন: await supabase.from('settings').update({ logo_url: null }).eq('id', 1);
+            alert('লোগো সফলভাবে মুছে ফেলা হয়েছে!');
+            location.reload();
+        } catch (error) {
+            console.error('Error deleting logo:', error);
+        }
+    }
+});
+
+// গ্যালারি ছবি ডিলিট করার ফাংশন
+document.querySelectorAll('.btn-delete-gallery').forEach(button => {
+    button.addEventListener('click', async (e) => {
+        const imageId = e.target.getAttribute('data-id');
+        if (confirm('এই গ্যালারি ছবিটি ডিলিট করতে চান?')) {
+            try {
+                // Supabase থেকে নির্দিষ্ট গ্যালারি আইডি ডিলিট করার কোড
+                // যেমন: await supabase.from('gallery').delete().eq('id', imageId);
+                alert('গ্যালারি ছবি সফলভাবে ডিলিট করা হয়েছে!');
+                location.reload();
+            } catch (error) {
+                console.error('Error deleting gallery image:', error);
+            }
+        }
+    });
+});
