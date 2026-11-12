@@ -149,38 +149,74 @@
         </div>
     </section>
    <!-- Footer Section -->
-<footer class="footer">
-    <div class="wrap footer-content" style="display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: center !important; width: 100%; flex-wrap: nowrap !important; gap: 10px;">
+<footer class="footer" style="background-color: #0b0f19; color: #a1a1a1; padding: 50px 20px 20px 20px; font-family: sans-serif; border-top: 1px solid rgba(0, 212, 255, 0.1);">
+    <div class="wrap" style="max-width: 1100px; margin: 0 auto;">
         
-        <!-- ১. শুরুতে: শুধু লোগো (বামে বর্ডার সহ) -->
-        <div class="footer-brand" style="display: flex; align-items: center; flex-shrink: 0; justify-content: left">
-            <img src="assets/Fasttech-logo.jpg" alt="FastTech" style="height: 32px; width: auto; padding: 3px; border-radius: 6px; border: 1.5px solid rgba(0, 212, 255, 0.6); box-shadow: 0 0 8px rgba(0, 212, 255, 0.4); background: rgba(0, 0, 0,.2); margin-right: 10px;" onerror="this.src='assets/fasttech-logo.jpg'">
+        <!-- ১. লোগো ও সোশ্যাল আইকন সেকশন -->
+        <div style="margin-bottom: 40px;">
+            <!-- লোগো -->
+            <div style="margin-bottom: 20px;">
+                <img src="assets/Fasttech-logo.jpg" alt="FastTech Network" style="height: 40px; width: auto; padding: 3px; border-radius: 6px; border: 1.5px solid rgba(0, 212, 255, 0.6); box-shadow: 0 0 8px rgba(0, 212, 255, 0.4); background: rgba(0,0,0,0.2);" onerror="this.src='assets/fasttech-logo.jpg'">
+            </div>
+            
+            <!-- সোশ্যাল আইকনগুলো -->
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <!-- ফেসবুক -->
+                <a href="https://www.facebook.com/share/1cSfSughi4/" target="_blank" title="Facebook" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(0, 212, 255, 0.4); border-radius: 50%; color: #ffffff; text-decoration: none; transition: 0.3s;">
+                    <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <!-- ইনস্টাগ্রাম -->
+                <a href="https://instagram.com" target="_blank" title="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(0, 212, 255, 0.4); border-radius: 50%; color: #ffffff; text-decoration: none; transition: 0.3s;">
+                    <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+            </div>
         </div>
-        
-        <!-- ২. মাঝখানে: সোশ্যাল আইকন (Facebook & Instagram) -->
-        <div class="footer-socials" style="display: flex; gap: 10px; align-items: center; justify-content: center; flex-shrink: 0;">
-            <a href="https://www.facebook.com/share/1cSfSughi4/" target="_blank" title="Facebook" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(0, 212, 255, 0.4); border-radius: 50%; color: #ffffff; text-decoration: none;">
-                <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-            </a>
-            <a href="https://instagram.com" target="_blank" title="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid rgba(0, 212, 255, 0.4); border-radius: 50%; color: #ffffff; text-decoration: none;">
-                <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-            </a>
+
+        <!-- ২. লিংক ও কন্টাক্ট ইনফো কলামগুলো (Grid Layout) -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 40px;">
+            
+            <!-- কলাম ১: Quick Links -->
+            <div>
+                <h4 style="color: #ffffff; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid #00d4ff; padding-left: 8px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+                    <li><a href="#" style="color: #a1a1a1; text-decoration: none; font-size: 13px; transition: 0.2s;">Home</a></li>
+                    <li><a href="#packages" style="color: #a1a1a1; text-decoration: none; font-size: 13px; transition: 0.2s;">Packages</a></li>
+                    <li><a href="#coverage" style="color: #a1a1a1; text-decoration: none; font-size: 13px; transition: 0.2s;">Coverage</a></li>
+                    <li><a href="#contact" style="color: #a1a1a1; text-decoration: none; font-size: 13px; transition: 0.2s;">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- কলাম ২: Legal -->
+            <div>
+                <h4 style="color: #ffffff; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid #00d4ff; padding-left: 8px;">Legal</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+                    <li><a href="#" style="color: #a1a1a1; text-decoration: none; font-size: 13px;">Terms & Conditions</a></li>
+                    <li><a href="#" style="color: #a1a1a1; text-decoration: none; font-size: 13px;">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- কলাম ৩: Get in Touch -->
+            <div>
+                <h4 style="color: #ffffff; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid #00d4ff; padding-left: 8px;">Get In Touch</h4>
+                <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                    <p style="margin: 0; color: #a1a1a1;">📍 ২য় তলা, হাজি বশির রহমান মার্কেট, লোহাগাড়া, চট্টগ্রাম।</p>
+                    <p style="margin: 0; color: #a1a1a1;">📞 +880 1622492004</p>
+                    <p style="margin: 0; color: #a1a1a1;">✉️ support@fasttechnetwork.com</p>
+                </div>
+            </div>
+
         </div>
-        
-        <!-- ৩. শেষে: প্যাকেজ ও কন্টাক্ট লিংক (ডানে) -->
-        <div class="footer-links" style="display: flex; gap: 15px; align-items: center; flex-shrink: 0;">
-            <a href="#packages" style="font-size: 13px; color: #a1a1a1; text-decoration: none; white-space: nowrap;">Packages</a>
-            <a href="#contact" style="font-size: 13px; color: #a1a1a1; text-decoration: none; white-space: nowrap;">Contact</a>
+
+        <!-- ৩. একদম নিচের কপিরাইট অংশ -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px;">
+            <div>© <span id="year"></span> FastTech Network. All rights reserved.</div>
+            <div>Designed for Excellence</div>
         </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <div>© <span id="year"></span> FastTech Network. All rights reserved.</div>
-        <div>Designed for Excellence</div>
+
     </div>
 </footer>
     <script src="app.js"></script>
