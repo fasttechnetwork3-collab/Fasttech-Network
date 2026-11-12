@@ -102,10 +102,10 @@ h1 { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.3; letter-spacing: -0.5
 .stats-grid b { font: 800 24px 'Plus Jakarta Sans'; color: var(--cyan); }
 .stats-grid span { color: var(--muted); font-size: 14px; }
 
-/* Sections General */
-.section { padding: 90px 0; }
-.section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 45px; }
-.section h2 { font-size: clamp(30px, 3.5vw, 42px); margin: 15px 0 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+/* Sections General (Updated Heading Size) */
+.section { padding: 75px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 35px; }
+.section h2 { font-size: clamp(22px, 2.4vw, 28px); margin: 12px 0 0; font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif; font-weight: 700; }
 .section h2 em { font-style: normal; color: var(--cyan); }
 
 /* Packages Cards */
@@ -135,9 +135,22 @@ h1 { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.3; letter-spacing: -0.5
 .package-benefits { list-style: none; padding: 0; margin: 0 0 22px; display: flex; justify-content: center; gap: 10px; color: var(--muted); font-size: 13px; }
 .package-cta { margin-top: auto; border-radius: 12px; width: 100%; padding: 12px; }
 
-/* Coverage Locations */
-.coverage-locations ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
-.coverage-locations li { background: rgba(0,210,255,0.08); border: 1px solid rgba(0,210,255,0.25); padding: 10px 20px; border-radius: 12px; color: #fff; font-weight: 600; }
+/* Coverage Locations (Updated Compact Size) */
+.coverage-locations ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+.coverage-locations li { 
+  background: rgba(0,210,255,0.08); 
+  border: 1px solid rgba(0,210,255,0.25); 
+  padding: 6px 14px; 
+  border-radius: 8px; 
+  color: #fff; 
+  font-size: 13px; 
+  font-weight: 500; 
+  transition: 0.25s;
+}
+.coverage-locations li:hover {
+  border-color: var(--cyan);
+  background: rgba(0,210,255,0.16);
+}
 
 /* Gallery */
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
