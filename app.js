@@ -120,4 +120,61 @@ function render(d){
     const coverageEl = document.getElementById('coverageLocations');
     if(coverageEl){
         const locations = (d.coverageLocations && d.coverageLocations.length > 0) ? d.coverageLocations : defaults.coverageLocations;
-        coverageEl.innerHTML = '<ul>' + locations.map(x =>
+        coverageEl.innerHTML = '<ul>' + locations.map(x => `<li>📍 ${esc(x.name)}</li>`).join('') + '</ul>';
+    }
+    
+    const packageGrid = document.getElementById('packageGrid');
+    if(packageGrid) {
+        const pkgs = (d.packages && d.packages.length > 0) ? d.packages : defaults.packages;
+        packageGrid.innerHTML = pkgs.map((p,i)=>`
+            <article class="package-card">
+                <div class="package-body">
+                    <div class="package-price-circle">
+                        <strong>${esc(p.price)}</strong>
+                        <small>/month</small>
+                    </div>
+                    <h3>${esc(p.title)}</h3>
+                    <div class="package-speed-strip">
+                        ⚡ <strong>${esc(String(p.speed).replace(/\s*Mbps/i,''))}</strong> <small>Mbps</small>
+                    </div>
+                    <ul class="package-benefits">
+                        <li>✓ YouTube</li>
+                        <li>✓ Facebook</li>
+                        <li>✓ BDIX</li>
+                    </ul>
+                    <a class="btn package-cta" href="#contact">Subscribe Now <b>→</b></a>
+                </div>
+            </article>`).join('');
+    }
+    
+    const galleryGrid = document.getElementById('galleryGrid');
+    if(galleryGrid) {
+        const samples = ['Network installation','Fiber optic connectivity','FastTech team'];
+        galleryGrid.innerHTML = (d.gallery.length ? d.gallery : samples.map((x,i)=>({title:x,image:'',sample:i}))).map((g,i)=>`<div class="gallery-item">${g.image?`<img src="${g.image}" alt="${esc(g.title)}">`:''}<span>${esc(g.title)}</span></div>`).join('');
+    }
+
+    const yearEl = document.getElementById('year');
+    if(yearEl) yearEl.textContent = new Date().getFullYear();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadPublicData();
+
+    const menuBtn = document.getElementById('menuBtn');
+    if(menuBtn) {
+        menuBtn.addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm) {
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const d = getData();
+            const f = new FormData(e.target);
+            const msg = `নতুন সংযোগের অনুরোধ%0Aনাম: ${encodeURIComponent(f.get('name'))}%0Aমোবাইল: ${encodeURIComponent(f.get('phone'))}%0Aএলাকা: ${encodeURIComponent(f.get('area'))}%0Aবার্তা: ${encodeURIComponent(f.get('message'))}`;
+            const number = (d.whatsapp || '8801622492004').replace(/\D/g, '');
+            if(number.length >= 10) window.open(`https://wa.me/${number}?text=${msg}`, '_blank');
+            else alert('WhatsApp নম্বর সেট করা নেই।');
+        });
+    }
+});
